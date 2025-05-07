@@ -1,0 +1,34 @@
+.contact {
+  padding: 4rem 2rem;
+  color: #fff;
+  text-align: center;
+}
+
+.contact h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.contact-links {
+  margin-top: 2rem;
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.contact-links a {
+  color: #1e90ff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.2rem;
+  border: 2px solid #1e90ff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.contact-links a:hover {
+  background-color: #1e90ff;
+  color: #111;
+}
