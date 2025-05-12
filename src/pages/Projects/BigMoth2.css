@@ -1,0 +1,95 @@
+.project-detail {
+  max-width: 800px;
+  margin: 4rem auto;
+  padding: 0 2rem;
+  color: #fff;
+  line-height: 1.8;
+}
+
+.demo-video {
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 2rem;
+  border-radius: 12px;
+}
+
+.carousel-wrapper {
+  overflow: hidden;
+  margin-bottom: 2rem;
+  border-radius: 10px;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 1rem;
+  animation: scrollX 25s linear infinite;
+}
+
+.carousel-wrapper:hover .carousel-track {
+  animation-play-state: paused;
+}
+
+.carousel-track img {
+  width: 100%;
+  max-width: 300px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+  cursor: zoom-in;
+}
+
+@keyframes scrollX {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.zoom-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.zoomed-image {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 12px;
+}
+
+.feature-list {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  padding-left: 1.2rem;
+}
+
+.feature-list li {
+  margin-bottom: 0.5rem;
+}
+
+.github-link {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.7rem 1.4rem;
+  background-color: #1e90ff;
+  color: #fff;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.github-link:hover {
+  background-color: #0d6efd;
+  color: #fff;
+}
