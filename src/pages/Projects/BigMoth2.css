@@ -2,8 +2,10 @@
   max-width: 800px;
   margin: 4rem auto;
   padding: 0 2rem;
-  color: #fff;
+  color: #f1f1f1;
   line-height: 1.8;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 15px;
 }
 
 .demo-video {
@@ -11,6 +13,7 @@
   max-width: 800px;
   margin-bottom: 2rem;
   border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .carousel-wrapper {
@@ -37,6 +40,11 @@
   border-radius: 8px;
   flex-shrink: 0;
   cursor: zoom-in;
+  transition: transform 0.3s;
+}
+
+.carousel-track img:hover {
+  transform: scale(1.03);
 }
 
 @keyframes scrollX {
@@ -54,27 +62,49 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.85);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  animation: fadeIn 0.2s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .zoomed-image {
   max-width: 90%;
   max-height: 90%;
   border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
 }
 
 .feature-list {
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   margin-bottom: 2rem;
   padding-left: 1.2rem;
+  border-left: 2px solid #1e90ff;
 }
 
 .feature-list li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.7rem;
+  padding-left: 0.5rem;
+  position: relative;
+}
+
+.feature-list li::before {
+  content: '▸';
+  color: #1e90ff;
+  position: absolute;
+  left: -1rem;
+  font-size: 1.2rem;
 }
 
 .github-link {
@@ -86,7 +116,7 @@
   border-radius: 6px;
   font-weight: bold;
   text-decoration: none;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s ease;
 }
 
 .github-link:hover {

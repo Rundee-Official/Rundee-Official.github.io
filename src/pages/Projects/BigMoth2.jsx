@@ -10,6 +10,7 @@ export default function BigMoth2() {
   return (
     <div className="project-detail">
       <h2>Big Moth 2</h2>
+
       {/* 🎞️ Video Section */}
       <video className="demo-video" controls autoPlay muted loop>
         <source src="/videos/big-moth-2/demo.mp4" type="video/mp4" />
@@ -39,15 +40,24 @@ export default function BigMoth2() {
       <p><strong>Role:</strong> UI/UX & Gameplay Programmer</p>
 
       <p>
-        Big Moth 2 is a whimsical 2D bug-catching game built during a DigiPen team project.  
-        I focused on creating intuitive UI, responsive gameplay, and natural AI behavior for moths.
+        Big Moth 2 is a whimsical 2D bug-catching game built during a DigiPen team project.
+        I was primarily responsible for building interactive UI/UX systems using Unreal Engine Blueprints, 
+        including main menus, tabbed inventory, companion moth displays, and tutorial quest integration.
+      </p>
+
+      <p>
+        Throughout development, I collaborated closely with UI designers and gameplay programmers. 
+        I implemented features like animated menus, in-game pause/debug UIs, 3D model overlays for inventory items, 
+        and tutorial triggers. I also tackled challenges like Perforce integration, resolution scaling, and 
+        blueprint modularity. Despite midterms and external blockers, I consistently contributed core systems to meet milestones.
       </p>
 
       <ul className="feature-list">
-        <li>🧭 Designed & implemented animated UI and HUD</li>
-        <li>🎮 Built player interaction with Unity Input System</li>
-        <li>🦋 FSM-driven moth behavior with smooth transitions</li>
-        <li>📦 Balanced mechanics for catching and befriending moths</li>
+        <li>🎨 Designed & implemented animated UI: main menu, pause, debug, market</li>
+        <li>📦 Developed tabbed inventory with 3D moth preview & companion grid</li>
+        <li>🧭 Created tutorial quest system and integrated in-game prompts</li>
+        <li>🛠️ Resolved scaling/UI bugs across resolutions and menus</li>
+        <li>🔗 Integrated UIs with Unreal Blueprints & Perforce version control</li>
       </ul>
 
       <a
