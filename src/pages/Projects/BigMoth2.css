@@ -106,20 +106,3 @@
   left: -1rem;
   font-size: 1.2rem;
 }
-
-.github-link {
-  display: inline-block;
-  margin-top: 2rem;
-  padding: 0.7rem 1.4rem;
-  background-color: #1e90ff;
-  color: #fff;
-  border-radius: 6px;
-  font-weight: bold;
-  text-decoration: none;
-  transition: background-color 0.2s ease;
-}
-
-.github-link:hover {
-  background-color: #0d6efd;
-  color: #fff;
-}

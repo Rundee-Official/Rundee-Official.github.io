@@ -12,13 +12,11 @@ import BigMoth2 from './pages/Projects/BigMoth2';
 
 import Contact from './pages/Contact';
 
-
-
 export default function App() {
   return (
     <Router>
       <Navbar />
-      <div style={{ paddingTop: '4rem' }}>
+      <div className="App">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />

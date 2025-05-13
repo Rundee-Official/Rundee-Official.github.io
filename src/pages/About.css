@@ -16,3 +16,69 @@
   margin-bottom: 1.25rem;
   font-size: 1.1rem;
 }
+
+.about-profile {
+  display: block;
+  margin: 0 auto 2rem auto;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+.experience-list,
+.education-list {
+  margin-top: 2rem;
+  padding-left: 1.2rem;
+  list-style: disc;
+  line-height: 1.8;
+}
+
+.experience-list li,
+.education-list li {
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+  color: #ddd;
+}
+
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+  margin-top: 2rem;
+  border-left: 2px solid #777;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -10px;
+  top: 6px;
+  width: 12px;
+  height: 12px;
+  background-color: #6cf;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+
+.timeline-content {
+  padding-left: 0.5rem;
+  color: #ddd;
+}
+
+.timeline-content h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+  color: #fff;
+}
+
+.timeline-date {
+  font-size: 0.9rem;
+  color: #aaa;
+  display: block;
+  margin-bottom: 0.5rem;
+}

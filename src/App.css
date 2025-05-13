@@ -6,6 +6,13 @@ body {
   font-family: 'Segoe UI', sans-serif;
 }
 
+html, body, #root, .App {
+  min-height: 100vh;
+  height: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 h1 {
   font-size: 2rem;
   text-align: center;
