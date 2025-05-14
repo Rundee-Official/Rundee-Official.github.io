@@ -10,11 +10,31 @@ html, body, #root, .App {
   min-height: 100vh;
   height: auto;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: visible;
 }
 
 h1 {
   font-size: 2rem;
   text-align: center;
   margin-top: 3rem;
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 0; /* 배경을 위한 공간 */
+}
+
+.page-content {
+  position: relative;
+  z-index: 2; /* 실제 콘텐츠가 배경 위에 렌더됨 */
+}
+
+.hero-bg-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1; /* 배경은 콘텐츠 뒤지만 Navbar보다는 아래 */
+  pointer-events: none;
 }

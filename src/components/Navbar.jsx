@@ -1,8 +1,8 @@
 // src/components/Navbar.jsx
 import { Link } from 'react-router-dom';
-import './Navbar.css'; // 스타일 분리 (없으면 나중에 만들면 됨)
+import './Navbar.css';
 
-export default function Navbar() {
+export default function Navbar({ isPlaying, toggleMusic }) {
   return (
     <nav className="navbar">
       <ul className="navbar-links">
@@ -11,6 +11,9 @@ export default function Navbar() {
         <li><Link to="/projects">Projects</Link></li>
         <li><Link to="/contact">Contact</Link></li>
       </ul>
+      <button className="music-toggle" onClick={toggleMusic}>
+        {isPlaying ? '🔊' : '🔇'}
+      </button>
     </nav>
   );
 }
