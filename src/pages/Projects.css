@@ -5,14 +5,17 @@
 }
 
 .project-grid {
-  display: grid;
-  gap: 2rem;
-  justify-content: center;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  margin-top: 2rem;
+  display: flex;
+  justify-content: center; 
+  gap: 2rem;               
+  flex-wrap: wrap;
+  max-width: 1000px;       
+  margin: 2rem auto 0 auto;
 }
 
 .project-card {
+  width: 320px;
+  height: 420px;
   background-color: #222;
   padding: 1rem;
   border-radius: 10px;
@@ -20,8 +23,10 @@
   transition: transform 0.2s, background-color 0.2s;
   color: white;
   text-decoration: none;
-  max-width: 350px;
-  margin: 0 auto; 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow: hidden;
 }
 
 .project-card:hover {
@@ -31,7 +36,7 @@
 
 .project-image {
   width: 100%;
-  height: 160px;
+  height: 220px;
   object-fit: cover;
   border-radius: 6px;
   margin-bottom: 1rem;
@@ -48,10 +53,16 @@
   transform: scale(1.03);
 }
 
-.project-role {
+.project-role,
+.project-card p {
   font-size: 0.95rem;
   color: #aaa;
   margin-bottom: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 @media (max-width: 768px) {

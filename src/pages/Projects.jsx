@@ -10,6 +10,13 @@ export default function Projects() {
       role: 'UI/UX & Gameplay Programmer',
       link: '/projects/BigMoth2',
       image: '/images/big-moth-2/big-moth-2.png'
+    },
+    {
+      title: 'Portfolio Website',
+      description: 'A creative developer’s portfolio with React and WebGL.',
+      role: 'Full Stack Developer',
+      link: '/projects/PortfolioWebsite',
+      image: '/images/portfolio-webpage/portfolio-webpage.png'
     }
   ];
 

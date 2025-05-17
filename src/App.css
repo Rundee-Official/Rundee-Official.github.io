@@ -4,6 +4,7 @@ body {
   background-color: #111;
   color: #fff;
   font-family: 'Segoe UI', sans-serif;
+  padding-top: 72px;
 }
 
 html, body, #root, .App {
