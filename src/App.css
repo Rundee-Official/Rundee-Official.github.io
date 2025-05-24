@@ -4,7 +4,7 @@ body {
   background-color: #111;
   color: #fff;
   font-family: 'Segoe UI', sans-serif;
-  padding-top: 72px;
+  padding-top: 0;
 }
 
 html, body, #root, .App {
@@ -31,7 +31,7 @@ h1 {
 }
 
 .hero-bg-canvas {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   height: 100%;

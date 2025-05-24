@@ -71,14 +71,15 @@ html, body {
 .typing-text {
   display: inline-block;
   white-space: pre;
-  font-size: 1.2rem;
+  font-size: 2rem;
   text-align: center;
+  font: bold;
 }
 
 .blinking-cursor {
   display: inline-block;
   width: 1px;
-  height: 1em;
+  height: 1.2em;
   background-color: white;
   margin-left: 2px;
   animation: blinkingCursor 1s step-end infinite;

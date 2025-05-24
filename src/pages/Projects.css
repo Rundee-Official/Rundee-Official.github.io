@@ -5,17 +5,19 @@
 }
 
 .project-grid {
-  display: flex;
-  justify-content: center; 
-  gap: 2rem;               
-  flex-wrap: wrap;
-  max-width: 1000px;       
-  margin: 2rem auto 0 auto;
+  display: grid;
+  gap: 2rem;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin-top: 2rem;
+  padding: 0 2rem;
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
+
 .project-card {
-  width: 320px;
-  height: 420px;
   background-color: #222;
   padding: 1rem;
   border-radius: 10px;
@@ -27,6 +29,8 @@
   flex-direction: column;
   justify-content: flex-start;
   overflow: hidden;
+  width: 100%;       /* 추가 */
+  box-sizing: border-box; /* 추가 */
 }
 
 .project-card:hover {

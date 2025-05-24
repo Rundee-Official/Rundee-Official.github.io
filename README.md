@@ -34,3 +34,6 @@ I specialize in Game AI, pathfinding systems, and tool development using C++ and
 ---
 
 Created with ❤️ by [Rundee](https://github.com/Rundee-Official)
+
+## Special Thanks
+Seokhwa Hong: BGM maker! :D

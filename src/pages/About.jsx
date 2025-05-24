@@ -75,7 +75,7 @@ export default function About() {
             <div className="timeline-content">
               <h3>DigiPen Institute of Technology</h3>
               <span className="timeline-date">Sep 2019 – Apr 2026</span>
-              <p>Bachelor of Science – Real-Time Interactive Simulation</p>
+              <p>Bachelor of Science in Computer Science – Real-Time Interactive Simulation</p>
             </div>
           </div>
           <div className="timeline-item">
@@ -83,8 +83,8 @@ export default function About() {
             <div className="timeline-content">
               <h3>Keimyung University</h3>
               <span className="timeline-date">Mar 2019 – Apr 2026</span>
-              <p>Bachelor of Science – Real-Time Interactive Simulation (GPA 3.6/4.0)</p>
-              <p>Student Council, Tutor for CS099</p>
+              <p>Bachelor of Science in Computer Science – Real-Time Interactive Simulation</p>
+              <p>Student Council President, Vice-President</p>
             </div>
           </div>
         </div>

@@ -17,12 +17,33 @@ export default function Projects() {
       role: 'Full Stack Developer',
       link: '/projects/PortfolioWebsite',
       image: '/images/portfolio-webpage/portfolio-webpage.png'
+    },
+    {
+      title: 'RundeeEngine',
+      description: 'Multi-threaded engine with SDL and OpenGL(GLAD).',
+      role: 'Solo Developer',
+      links: '/projects/RundeeEngine',
+      image: '/images/rundee-engine/rundee-engine.png'
+    },
+    {
+      title: 'Modular Weapon System',
+      description: 'Moudular weapon system using Unreal Engine.',
+      role: 'System Developer',
+      link: '',
+      image: ''
+    },
+    {
+      title: '3D Map Generator',
+      description: '3D map generator based on procedural generation with Unreal Engine.',
+      role: 'Solo Developer',
+      link: '',
+      image: ''
     }
   ];
 
   return (
     <section className="projects">
-      <h2>My Projects</h2>
+      <h1>My Projects</h1>
       <div className="project-grid">
         {projectList.map((p, i) => (
           <motion.div

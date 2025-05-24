@@ -11,29 +11,30 @@ export default function Home() {
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    const currentPhrase = phrases[phraseIndex];
-    let timeout;
+  const interval = setInterval(() => {
+    const current = phrases[phraseIndex];
 
-    if (!deleting && charIndex < currentPhrase.length) {
-      timeout = setTimeout(() => {
-        setDisplayText(currentPhrase.slice(0, charIndex + 1));
-        setCharIndex(charIndex + 1);
-      }, 50);
+    if (!deleting && charIndex < current.length) {
+      setDisplayText(current.slice(0, charIndex + 1));
+      setCharIndex(prev => prev + 1);
     } else if (deleting && charIndex > 0) {
-      timeout = setTimeout(() => {
-        setDisplayText(currentPhrase.slice(0, charIndex - 1));
-        setCharIndex(charIndex - 1);
-      }, 50);
+      setDisplayText(current.slice(0, charIndex - 1));
+      setCharIndex(prev => prev - 1);
     } else {
-      timeout = setTimeout(() => {
-        setDeleting(!deleting);
-        if (!deleting) return;
+      if (!deleting) {
+        setTimeout(() => setDeleting(true), 1000); // 대기 시간 부여
+      } else {
+        setDeleting(false);
         setPhraseIndex((phraseIndex + 1) % phrases.length);
-      }, 1000);
+        setCharIndex(0);
+      }
+      clearInterval(interval);
     }
+  }, 50);
 
-    return () => clearTimeout(timeout);
-  }, [charIndex, deleting, phraseIndex, phrases]);
+  return () => clearInterval(interval);
+  }, [charIndex, deleting, phraseIndex]);
+
 
   return (
     <section className="hero">
@@ -46,7 +47,7 @@ export default function Home() {
       >
         <h1>Hi, I'm Haneul Lee (a.k.a Rundee) 👋</h1>
         <p className="typing-text">
-          <span>{displayText}</span>
+          <span>who is a {displayText}</span>
           <span className="blinking-cursor" />
         </p>
         <button>View Projects</button>
