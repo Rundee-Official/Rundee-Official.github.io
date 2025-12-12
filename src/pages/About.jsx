@@ -10,14 +10,24 @@ export default function About() {
       transition={{ duration: 0.6 }}
       viewport={{ once: true }}
     >
-      <motion.img
-        src="/images/about/profile.jpg"
-        alt="Profile"
-        className="about-profile"
-        initial={{ opacity: 0, scale: 0.95 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
-      />
+      <div className="about-photos">
+        <motion.img
+          src="/images/about/profile.jpg"
+          alt="Profile"
+          className="about-profile"
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+        />
+        <motion.img
+          src="/images/about/profile_Rundee.png"
+          alt="Profile illustration"
+          className="about-profile"
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: 'easeOut', delay: 0.1 }}
+        />
+      </div>
 
       <h2>About Me</h2>
       <p>

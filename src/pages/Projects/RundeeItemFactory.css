@@ -1,0 +1,99 @@
+.project-detail {
+  max-width: 800px;
+  margin: 4rem auto;
+  padding: 0 2rem;
+  color: #f1f1f1;
+  line-height: 1.8;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 15px;
+}
+
+.carousel-wrapper {
+  overflow: hidden;
+  margin: 2rem 0;
+  border-radius: 10px;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 1rem;
+  animation: scrollX 25s linear infinite;
+}
+
+.carousel-wrapper:hover .carousel-track {
+  animation-play-state: paused;
+}
+
+.carousel-track img {
+  width: 100%;
+  max-width: 300px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+  cursor: zoom-in;
+  transition: transform 0.3s;
+  background: #0b1224;
+  border: 1px solid #1f2b45;
+}
+
+.carousel-track img:hover {
+  transform: scale(1.03);
+}
+
+@keyframes scrollX {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.zoom-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.zoomed-image {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.feature-list {
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+  padding-left: 1.2rem;
+  border-left: 2px solid #1e90ff;
+}
+
+.feature-list li {
+  margin-bottom: 0.7rem;
+  padding-left: 0.5rem;
+  position: relative;
+}
+
+.feature-list li::before {
+  content: '▸';
+  color: #1e90ff;
+  position: absolute;
+  left: -1rem;
+  font-size: 1.2rem;
+}
+

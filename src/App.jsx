@@ -6,9 +6,11 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Projects from './pages/Projects';
 import BigMoth2 from './pages/Projects/BigMoth2';
-import PortfolioWebsite from './pages/Projects/PortfolioWebsite'
+import PortfolioWebsite from './pages/Projects/PortfolioWebsite';
+import RundeeItemFactory from './pages/Projects/RundeeItemFactory';
 import Contact from './pages/Contact';
 import HomeBackground from './components/HomeBackground';
+import { LanguageProvider } from './context/LanguageContext';
 
 function MainRoutesWithBackground() {
   const location = useLocation();
@@ -23,6 +25,7 @@ function MainRoutesWithBackground() {
           <Route path="/about" element={<About />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/BigMoth2" element={<BigMoth2 />} />
+          <Route path="/projects/RundeeItemFactory" element={<RundeeItemFactory />} />
           <Route path="/projects/PortfolioWebsite" element={<PortfolioWebsite />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
@@ -52,17 +55,19 @@ export default function App() {
   };
 
   return (
-    <Router>
-      <audio
-        ref={audioRef}
-        src="/audio/bg-music.mp3"
-        loop
-        style={{ display: 'none' }}
-      />
-      <Navbar isPlaying={isPlaying} toggleMusic={toggleMusic} />
-      <div className="App">
-        <MainRoutesWithBackground />
-      </div>
-    </Router>
+    <LanguageProvider>
+      <Router>
+        <audio
+          ref={audioRef}
+          src="/audio/bg-music.mp3"
+          loop
+          style={{ display: 'none' }}
+        />
+        <Navbar isPlaying={isPlaying} toggleMusic={toggleMusic} />
+        <div className="App">
+          <MainRoutesWithBackground />
+        </div>
+      </Router>
+    </LanguageProvider>
   );
 }
