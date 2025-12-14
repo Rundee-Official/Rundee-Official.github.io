@@ -25,11 +25,10 @@
 .carousel-track {
   display: flex;
   gap: 1rem;
-  animation: scrollX 25s linear infinite;
-}
-
-.carousel-wrapper:hover .carousel-track {
-  animation-play-state: paused;
+  width: max-content;
+  flex-wrap: nowrap;
+  padding-right: 1rem;
+  will-change: transform;
 }
 
 .carousel-track img {

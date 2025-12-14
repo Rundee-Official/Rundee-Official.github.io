@@ -39,3 +39,7 @@ h1 {
   z-index: 1; /* 배경은 콘텐츠 뒤지만 Navbar보다는 아래 */
   pointer-events: none;
 }
+
+.hero-bg-canvas canvas {
+  filter: blur(2px);
+}

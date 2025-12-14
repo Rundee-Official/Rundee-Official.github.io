@@ -77,6 +77,10 @@
   color: #ddd;
 }
 
+.timeline-content p {
+  margin-bottom: 0.75rem;
+}
+
 .timeline-content h3 {
   font-size: 1.1rem;
   margin-bottom: 0.25rem;
@@ -88,4 +92,16 @@
   color: #aaa;
   display: block;
   margin-bottom: 0.5rem;
+}
+
+.timeline-details {
+  margin: 0 0 1rem 1.2rem;
+  padding: 0;
+  list-style: disc;
+  color: #ccc;
+  line-height: 1.6;
+}
+
+.timeline-details li + li {
+  margin-top: 0.5rem;
 }

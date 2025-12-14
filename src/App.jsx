@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Projects from './pages/Projects';
 import BigMoth2 from './pages/Projects/BigMoth2';
+import Fear from './pages/Projects/Fear';
 import PortfolioWebsite from './pages/Projects/PortfolioWebsite';
 import RundeeItemFactory from './pages/Projects/RundeeItemFactory';
 import Contact from './pages/Contact';
@@ -25,6 +26,7 @@ function MainRoutesWithBackground() {
           <Route path="/about" element={<About />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/BigMoth2" element={<BigMoth2 />} />
+          <Route path="/projects/Fear" element={<Fear />} />
           <Route path="/projects/RundeeItemFactory" element={<RundeeItemFactory />} />
           <Route path="/projects/PortfolioWebsite" element={<PortfolioWebsite />} />
           <Route path="/contact" element={<Contact />} />

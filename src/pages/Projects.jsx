@@ -1,133 +1,240 @@
+import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import './Projects.css';
 import { useLanguage } from '../context/LanguageContext';
 
+const copy = {
+  en: {
+    title: 'Projects',
+    roleLabel: 'Role',
+    filters: {
+      all: 'All',
+      school: 'School Projects',
+      udangtang: 'Udangtang Studio',
+      personal: 'Personal',
+      game: 'Games',
+      tool: 'Tools',
+      web: 'Web'
+    },
+    orgLabels: { school: 'School Project', udangtang: 'Udangtang Studio', personal: 'Personal' },
+    categories: [
+      {
+        id: 'team',
+        label: 'Team Projects',
+        items: [
+          {
+            title: 'Big Moth 2',
+            description: 'Catch moths and befriend them in a whimsical 3D game.',
+            role: 'UI/UX & Gameplay Programmer',
+            link: '/projects/BigMoth2',
+            image: '/images/big-moth-2/big-moth-2-cover.png',
+            kind: 'game',
+            org: 'school'
+          },
+          {
+            title: 'FEAR',
+            description: 'Unity horror project: sub-event system, gameplay scripting, event pipelines.',
+            role: 'Technical Director / Gameplay Programmer',
+            link: '/projects/Fear',
+            image: '/images/fear/fear-cover.png',
+            kind: 'game',
+            org: 'udangtang'
+          }
+        ]
+      },
+      {
+        id: 'individual',
+        label: 'Individual Projects',
+        items: [
+          {
+            title: 'Rundee Item Factory',
+            description: 'LLM-powered item generator (Unity/UE) · presets · balance reports',
+            role: 'Tools & Systems Programmer',
+            link: '/projects/RundeeItemFactory',
+            image: '/images/rundee-item-factory/cover.svg',
+            kind: 'tool',
+            org: 'personal'
+          },
+          {
+            title: 'Portfolio Website',
+            description: 'React + Three.js portfolio with animated background and routing.',
+            role: 'Full Stack Developer',
+            link: '/projects/PortfolioWebsite',
+            image: '/images/portfolio-webpage/portfolio-webpage.png',
+            kind: 'web',
+            org: 'personal'
+          }
+        ]
+      }
+    ],
+    empty: 'No projects to show yet.'
+  },
+  ko: {
+    title: '프로젝트',
+    roleLabel: '역할',
+    filters: {
+      all: '전체',
+      school: '학교 프로젝트',
+      udangtang: '우당탕 스튜디오',
+      personal: '개인',
+      game: '게임',
+      tool: '툴',
+      web: '웹'
+    },
+    orgLabels: { school: '학교 프로젝트', udangtang: '우당탕 스튜디오', personal: '개인' },
+    categories: [
+      {
+        id: 'team',
+        label: '팀 프로젝트',
+        items: [
+          {
+            title: 'Big Moth 2',
+            description: '3D에서 나방을 잡고 친구가 되는 아기자기한 게임.',
+            role: 'UI/UX & 게임플레이 프로그래머',
+            link: '/projects/BigMoth2',
+            image: '/images/big-moth-2/big-moth-2-cover.png',
+            kind: 'game',
+            org: 'school'
+          },
+          {
+            title: 'FEAR',
+            description: 'Unity 공포 프로젝트: 서브 이벤트 시스템, 게임플레이 스크립팅, 이벤트 파이프라인.',
+            role: '테크니컬 디렉터 / 게임플레이 프로그래머',
+            link: '/projects/Fear',
+            image: '/images/fear/fear-cover.png',
+            kind: 'game',
+            org: 'udangtang'
+          }
+        ]
+      },
+      {
+        id: 'individual',
+        label: '개인 프로젝트',
+        items: [
+          {
+            title: 'Rundee Item Factory',
+            description: 'LLM 기반 아이템 제너레이터 (Unity/UE) · 프리셋 · 밸런스 리포트',
+            role: '툴/시스템 프로그래머',
+            link: '/projects/RundeeItemFactory',
+            image: '/images/rundee-item-factory/cover.svg',
+            kind: 'tool',
+            org: 'personal'
+          },
+          {
+            title: 'Portfolio Website',
+            description: 'React + Three.js 포트폴리오, 애니메이티드 배경과 라우팅.',
+            role: '풀스택 개발자',
+            link: '/projects/PortfolioWebsite',
+            image: '/images/portfolio-webpage/portfolio-webpage.png',
+            kind: 'web',
+            org: 'personal'
+          }
+        ]
+      }
+    ],
+    empty: '표시할 프로젝트가 없습니다.'
+  }
+};
+
 export default function Projects() {
   const { lang } = useLanguage();
-  const copy = {
-    en: {
-      title: 'My Projects',
-      roleLabel: 'Role',
-      projects: [
-        {
-          title: 'Big Moth 2',
-          description: 'Catch moths and befriend them in a whimsical 3D game.',
-          role: 'UI/UX & Gameplay Programmer',
-          link: '/projects/BigMoth2',
-          image: '/images/big-moth-2/big-moth-2.png'
-        },
-        {
-          title: 'Rundee Item Factory',
-          description: 'LLM-powered item generator (Unity/UE) · presets · balance reports',
-          role: 'Tools & Systems Programmer',
-          link: '/projects/RundeeItemFactory',
-          image: '/images/rundee-item-factory/cover.svg'
-        },
-        {
-          title: 'Portfolio Website',
-          description: 'React + Three.js portfolio with animated background and routing.',
-          role: 'Full Stack Developer',
-          link: '/projects/PortfolioWebsite',
-          image: '/images/portfolio-webpage/portfolio-webpage.png'
-        },
-        {
-          title: 'RundeeEngine',
-          description: 'Multi-threaded engine with SDL and OpenGL(GLAD).',
-          role: 'Solo Developer',
-          link: '/projects/RundeeEngine',
-          image: '/images/rundee-engine/rundee-engine.png'
-        },
-        {
-          title: 'Modular Weapon System',
-          description: 'Modular weapon system using Unreal Engine.',
-          role: 'System Developer',
-          link: '',
-          image: ''
-        },
-        {
-          title: '3D Map Generator',
-          description: 'Procedural 3D map generator built with Unreal Engine.',
-          role: 'Solo Developer',
-          link: '',
-          image: ''
-        }
-      ]
-    },
-    ko: {
-      title: '프로젝트',
-      roleLabel: '역할',
-      projects: [
-        {
-          title: 'Big Moth 2',
-          description: '3D에서 나방을 잡고 친구가 되는 아기자기한 게임.',
-          role: 'UI/UX & 게임플레이 프로그래머',
-          link: '/projects/BigMoth2',
-          image: '/images/big-moth-2/big-moth-2.png'
-        },
-        {
-          title: 'Rundee Item Factory',
-          description: 'LLM 기반 아이템 제너레이터 (Unity/UE) · 프리셋 · 밸런스 리포트',
-          role: '툴/시스템 프로그래머',
-          link: '/projects/RundeeItemFactory',
-          image: '/images/rundee-item-factory/cover.svg'
-        },
-        {
-          title: 'Portfolio Website',
-          description: 'React + Three.js 포트폴리오, 애니메이티드 배경과 라우팅.',
-          role: '풀스택 개발자',
-          link: '/projects/PortfolioWebsite',
-          image: '/images/portfolio-webpage/portfolio-webpage.png'
-        },
-        {
-          title: 'RundeeEngine',
-          description: 'SDL과 OpenGL(GLAD) 기반 멀티스레드 엔진.',
-          role: '단독 개발자',
-          link: '/projects/RundeeEngine',
-          image: '/images/rundee-engine/rundee-engine.png'
-        },
-        {
-          title: 'Modular Weapon System',
-          description: '언리얼 엔진으로 만든 모듈러 무기 시스템.',
-          role: '시스템 개발자',
-          link: '',
-          image: ''
-        },
-        {
-          title: '3D Map Generator',
-          description: '언리얼 엔진 기반 프로시저럴 3D 맵 생성기.',
-          role: '단독 개발자',
-          link: '',
-          image: ''
-        }
-      ]
-    }
-  };
-
   const text = copy[lang] || copy.en;
-  const projectList = text.projects;
+  const categories = text.categories || [];
+  const [categoryId, setCategoryId] = useState(categories[0]?.id || '');
+  const [orgFilter, setOrgFilter] = useState('all');
+  const [filterMode, setFilterMode] = useState('org'); // 'org' | 'kind'
+
+  useEffect(() => {
+    setCategoryId(categories[0]?.id || '');
+    setOrgFilter('all');
+    setFilterMode(categories[0]?.id === 'individual' ? 'kind' : 'org');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lang]);
+
+  const activeCategory = categories.find(c => c.id === categoryId) || categories[0] || { items: [] };
+
+  useEffect(() => {
+    setFilterMode(categoryId === 'individual' ? 'kind' : 'org');
+    setOrgFilter('all');
+  }, [categoryId]);
+
+  const filterOptions = useMemo(() => {
+    const set = new Set();
+    (activeCategory.items || []).forEach(item => {
+      const key = filterMode === 'kind' ? item.kind : item.org;
+      if (key) set.add(key);
+    });
+    return ['all', ...Array.from(set)];
+  }, [activeCategory, filterMode]);
+
+  const filteredItems = (activeCategory.items || []).filter((item) => {
+    const key = filterMode === 'kind' ? item.kind : item.org;
+    return orgFilter === 'all' || key === orgFilter;
+  });
 
   return (
     <section className="projects">
       <h1>{text.title}</h1>
+
+      <div className="projects-tabs" role="tablist" aria-label={text.title}>
+        {categories.map((cat) => (
+          <button
+            key={cat.id}
+            role="tab"
+            aria-selected={categoryId === cat.id}
+            className={categoryId === cat.id ? 'active' : ''}
+            onClick={() => {
+              setCategoryId(cat.id);
+              setOrgFilter('all');
+            }}
+          >
+            {cat.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="projects-filters" aria-label="Filter">
+        {filterOptions.map((opt) => (
+          <button
+            key={opt}
+            className={orgFilter === opt ? 'active' : ''}
+            onClick={() => setOrgFilter(opt)}
+          >
+            {opt === 'all' ? text.filters.all : (text.filters[opt] || opt)}
+          </button>
+        ))}
+      </div>
+
       <div className="project-grid">
-        {projectList.map((p, i) => (
+        {filteredItems.map((p, i) => (
           <motion.div
-            key={i}
+            key={p.title || i}
             className="project-card"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: i * 0.2 }}
+            transition={{ duration: 0.5, delay: i * 0.15 }}
             viewport={{ once: true }}
           >
-            <Link to={p.link} className="project-link">
-              <img src={p.image} alt={p.title} className="project-image" />
+            <Link to={p.link || '#'} className="project-link">
+              {p.image ? (
+                <img src={p.image} alt={p.title} className="project-image" />
+              ) : null}
               <h3>{p.title}</h3>
+              {p.org && (
+                <span className="project-badge">
+                  {text.orgLabels?.[p.org] || p.org}
+                </span>
+              )}
               <p className="project-role"><strong>{text.roleLabel}:</strong> {p.role}</p>
               <p>{p.description}</p>
             </Link>
           </motion.div>
         ))}
+
+        {filteredItems.length === 0 && (
+          <p className="projects-empty">{text.empty}</p>
+        )}
       </div>
     </section>
   );
