@@ -9,22 +9,29 @@ const copy = {
     demo: 'Demo',
     overviewTitle: 'Overview',
     overview: [
-      'FEAR (formerly Catalog: X, Project abnormal) is a Unity horror project built at Udangtang Studio. I owned the sub-event system that drives branching scares and interactions, and integrated gameplay scripting with level triggers and narrative beats.',
-      'Focused on reliable event pipelines, timing, and reusable prefabs to keep designers fast while preserving performance in dark, VFX-heavy scenes.',
-      'Development is temporarily paused due to studio circumstances.'
+      'FEAR (formerly Catalog: X, Project abnormal) is a Unity horror project built at Udangtang Studio. As Technical Director and Gameplay Programmer, I architected and implemented core systems that drive branching scares, player interactions, and narrative progression.',
+      'A modular Sub-Event System sequences scares, interactions, and ambient cues across multiple event types (SubEvent1-8). Each sub-event operates independently with its own trigger conditions, event sequences, and recovery paths. The system uses an EventController that executes EventBase-derived scripts, enabling designers to chain events, control player movement, trigger VFX, and manage state transitions without requiring code changes.',
+      'The Mission Manager system uses JSON-based mission data to track progress across multiple steps, handle condition validation (Collect, Submit, TalkTo, MoveTo, Timeout), and manage mission state (InProgress, Completed, Failed). It supports exclusive missions with return-after-completion logic and integrates with Unity Netcode for multiplayer synchronization, updating tablet UI across all clients.',
+      'Full multiplayer networking support was implemented using Unity Netcode for GameObjects. The networking system handles player synchronization, room detection across clients, event triggering in multiplayer sessions, and server-authoritative mission state management. NetworkVariables and ServerRpc/ClientRpc patterns ensure consistent game state across all connected players.',
+      'Gameplay scripting was integrated with level triggers and narrative beats, creating event pipelines that connect sub-events with mission progression. The system manages timing, reusable prefabs, and state transitions to keep designers productive while maintaining performance in dark, VFX-heavy scenes.',
+      'All systems were designed with performance optimization in mind, using object pooling, efficient state management, and optimized VFX toggles to maintain stable frame rates. Systems were built to be reusable and maintainable for rapid iteration during development.',
+      'Note: Development is temporarily paused due to studio circumstances.'
     ],
     highlightsTitle: 'Highlights',
     highlights: [
-      'Built sub-event framework that sequences scares, interactions, and ambient cues with designer-friendly scripts',
-      'Integrated level triggers, timeline-driven scares, and fail-safe recovery paths to avoid stuck states',
-      'Optimized lighting/VFX toggles to reduce overdraw and keep frame-times stable in dense scenes',
-      'Authored gameplay scripts for core loops and coordinated with art/audio to keep timing tight'
+      'Modular Sub-Event System with eight independent event types for branching scares and interactions',
+      'Mission Manager with JSON-based data, condition validation, and multiplayer synchronization',
+      'Full multiplayer networking using Unity Netcode with server-authoritative state management',
+      'AI Propagation System using NavMesh triangulation for dynamic AI awareness',
+      'Performance optimizations with object pooling and VFX toggles for stable frame rates'
     ],
     systemsTitle: 'Systems & Tech',
     systems: [
-      'Event graph: modular sub-event nodes with cooldowns, priorities, and state guards',
-      'Trigger toolkit: proximity, line-of-sight, item possession, and timed resets for replayable scares',
-      'Performance passes: pooled props & VFX, culling-safe lights, and profiler-driven GPU/CPU trims'
+      'Sub-Event System with EventController and EventBase architecture',
+      'Mission Manager with JSON data and Unity Netcode integration',
+      'Unity Netcode for GameObjects with NetworkVariables and RPC patterns',
+      'AI Propagation System building triangle graphs from NavMesh',
+      'Object pooling and VFX toggle systems for performance optimization'
     ],
     gameplayGallery: 'Gameplay Gallery',
     devGallery: 'Dev Gallery'
@@ -35,22 +42,29 @@ const copy = {
     demo: '데모',
     overviewTitle: '개요',
     overview: [
-      'FEAR(구 Catalog: X)는 우당탕 스튜디오에서 만든 Unity 공포 프로젝트입니다. 브랜칭 공포/인터랙션을 담당하는 서브 이벤트 시스템을 구축하고, 게임플레이 스크립트를 레벨 트리거와 내러티브 비트에 연결했습니다.',
-      '어두운 씬에서 VFX가 많은 환경에서도 성능을 유지하도록 이벤트 파이프라인, 타이밍, 재사용 가능한 프리팹에 집중했습니다.',
+      'FEAR(구 Catalog: X, Project abnormal)는 우당탕 스튜디오에서 만든 Unity 공포 프로젝트입니다. 테크니컬 디렉터 및 게임플레이 프로그래머로서 브랜칭 공포, 플레이어 인터랙션, 내러티브 진행을 이끄는 핵심 시스템을 설계하고 구현했습니다.',
+      '다양한 이벤트 타입(SubEvent1-8)에 걸쳐 공포, 인터랙션, 앰비언트 큐를 시퀀싱하는 모듈형 서브 이벤트 시스템이 구축되었습니다. 각 서브 이벤트는 독립적으로 작동하며 고유한 트리거 조건, 이벤트 시퀀스, 복구 경로를 가집니다. EventBase를 상속받는 스크립트를 실행하는 EventController를 사용해 디자이너가 코드 변경 없이 이벤트를 체인하고, 플레이어 이동을 제어하며, VFX를 트리거하고, 상태 전환을 관리할 수 있도록 했습니다.',
+      'Mission Manager 시스템은 JSON 기반 미션 데이터를 사용해 여러 단계에 걸쳐 진행을 추적하고, 조건 검증(Collect, Submit, TalkTo, MoveTo, Timeout)을 처리하며, 미션 상태(InProgress, Completed, Failed)를 관리합니다. 완료 후 복귀 로직을 지원하는 독점 미션을 지원하며, Unity Netcode와 통합해 멀티플레이어 동기화를 수행하고 모든 클라이언트의 태블릿 UI를 업데이트합니다.',
+      'Unity Netcode for GameObjects를 사용한 완전한 멀티플레이어 네트워킹 지원이 구현되었습니다. 네트워킹 시스템은 플레이어 동기화, 클라이언트 간 룸 감지, 멀티플레이어 세션에서의 이벤트 트리거, 서버 권한 미션 상태 관리를 처리합니다. NetworkVariables와 ServerRpc/ClientRpc 패턴을 사용해 연결된 모든 플레이어 간 일관된 게임 상태를 보장합니다.',
+      '레벨 트리거와 내러티브 비트와 게임플레이 스크립팅이 통합되어 서브 이벤트와 미션 진행을 연결하는 이벤트 파이프라인이 생성되었습니다. 이 시스템은 타이밍, 재사용 가능한 프리팹, 상태 전환을 관리하여 디자이너가 생산적으로 작업할 수 있도록 하면서 어둡고 VFX가 많은 씬에서도 성능을 유지합니다.',
+      '모든 시스템은 성능 최적화를 고려해 설계되었으며, 오브젝트 풀링, 효율적인 상태 관리, 최적화된 VFX 토글을 사용해 안정적인 프레임률을 유지합니다. 시스템은 개발 중 빠른 반복을 위해 재사용 가능하고 유지보수 가능하도록 구축되었습니다.',
       '현재 스튜디오 사정으로 개발이 일시 중지된 상태입니다.'
     ],
     highlightsTitle: '하이라이트',
     highlights: [
-      '디자이너 친화 스크립트로 공포/인터랙션/앰비언트 큐를 시퀀싱하는 서브 이벤트 프레임워크 구현',
-      '레벨 트리거, 타임라인 기반 스케어, 실패 상태 복구 경로를 연동해 막힘 없이 진행',
-      '라이팅/VFX 토글을 최적화해 오버드로를 줄이고 어두운 씬에서 프레임 유지',
-      '핵심 루프 게임플레이 스크립트 작성, 아트/오디오와 타이밍 협업'
+      '브랜칭 공포와 인터랙션을 위한 8가지 독립 이벤트 타입을 가진 모듈형 서브 이벤트 시스템',
+      'JSON 기반 데이터, 조건 검증, 멀티플레이어 동기화를 지원하는 Mission Manager',
+      '서버 권한 상태 관리를 포함한 Unity Netcode 기반 멀티플레이어 네트워킹',
+      'NavMesh 삼각형 분할을 활용한 AI Propagation System으로 동적 AI 인식 구현',
+      '오브젝트 풀링과 VFX 토글을 통한 성능 최적화로 안정적인 프레임률 유지'
     ],
     systemsTitle: '시스템 & 기술',
     systems: [
-      '이벤트 그래프: 쿨다운/우선순위/상태 가드가 있는 모듈형 서브 이벤트 노드',
-      '트리거 툴킷: 근접, 시야, 아이템 보유, 타이머 리셋 등 반복 가능한 스케어를 위한 트리거',
-      '성능 패스: 풀링된 프랍/VFX, 컬링 안전 조명, 프로파일러 기반 GPU/CPU 트림'
+      'EventController와 EventBase 아키텍처를 사용하는 서브 이벤트 시스템',
+      'JSON 데이터와 Unity Netcode 통합을 포함한 Mission Manager',
+      'NetworkVariables와 RPC 패턴을 사용하는 Unity Netcode for GameObjects',
+      'NavMesh에서 삼각형 그래프를 구축하는 AI Propagation System',
+      '성능 최적화를 위한 오브젝트 풀링과 VFX 토글 시스템'
     ],
     gameplayGallery: '게임플레이 갤러리',
     devGallery: '개발 갤러리'

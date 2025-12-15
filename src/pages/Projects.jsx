@@ -1,8 +1,72 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import './Projects.css';
 import { useLanguage } from '../context/LanguageContext';
+
+function ProjectCard({ project, text }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    if (isHovered && project.video && videoRef.current) {
+      videoRef.current.play().catch(() => {});
+    } else if (!isHovered && videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.currentTime = 0;
+    }
+  }, [isHovered, project.video]);
+
+  return (
+    <motion.div
+      className="project-card"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      viewport={{ once: true }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <Link to={project.link || '#'} className="project-link">
+        <div className="project-media-wrapper">
+          {project.image && (
+            <img 
+              src={project.image} 
+              alt={project.title} 
+              className={`project-image ${isHovered && project.video ? 'hidden' : ''}`}
+            />
+          )}
+          {project.video && (
+            <video
+              ref={videoRef}
+              src={project.video}
+              className={`project-video ${isHovered ? 'visible' : 'hidden'}`}
+              muted
+              loop
+              playsInline
+            />
+          )}
+        </div>
+        <h3>{project.title}</h3>
+        {project.org && (
+          <span className="project-badge">
+            {text.orgLabels?.[project.org] || project.org}
+          </span>
+        )}
+        <p className="project-role">
+          <strong>{text.roleLabel}:</strong><br />
+          {project.role.split('\n').map((line, idx) => (
+            <span key={idx}>
+              {line}
+              {idx < project.role.split('\n').length - 1 && <br />}
+            </span>
+          ))}
+        </p>
+        <p>{project.description}</p>
+      </Link>
+    </motion.div>
+  );
+}
 
 const copy = {
   en: {
@@ -24,22 +88,34 @@ const copy = {
         label: 'Team Projects',
         items: [
           {
+            title: 'FEAR',
+            description: 'Unity horror project: sub-event system, gameplay scripting, event pipelines.',
+            role: 'Technical Director\nGameplay Programmer',
+            link: '/projects/Fear',
+            image: '/images/fear/fear-cover.png',
+            video: '/videos/fear/demo.mp4',
+            kind: 'game',
+            org: 'udangtang'
+          },
+          {
             title: 'Big Moth 2',
             description: 'Catch moths and befriend them in a whimsical 3D game.',
-            role: 'UI/UX & Gameplay Programmer',
+            role: 'UI/UX Programmer\nGameplay Programmer',
             link: '/projects/BigMoth2',
             image: '/images/big-moth-2/big-moth-2-cover.png',
+            video: '/videos/big-moth-2/demo.mp4',
             kind: 'game',
             org: 'school'
           },
           {
-            title: 'FEAR',
-            description: 'Unity horror project: sub-event system, gameplay scripting, event pipelines.',
-            role: 'Technical Director / Gameplay Programmer',
-            link: '/projects/Fear',
-            image: '/images/fear/fear-cover.png',
+            title: 'Spell It Out',
+            description: 'Draw spells with Joy-Con or mouse to defeat monsters.',
+            role: 'Controller System Developer\nSystems Programmer',
+            link: '/projects/SpellItOut',
+            image: '/images/spell-it-out/spell-it-out-cover.png',
+            video: '/videos/spell-it-out/demo.mp4',
             kind: 'game',
-            org: 'udangtang'
+            org: 'school'
           }
         ]
       },
@@ -50,7 +126,7 @@ const copy = {
           {
             title: 'Rundee Item Factory',
             description: 'LLM-powered item generator (Unity/UE) · presets · balance reports',
-            role: 'Tools & Systems Programmer',
+            role: 'Tools Developer\nSystems Developer',
             link: '/projects/RundeeItemFactory',
             image: '/images/rundee-item-factory/cover.svg',
             kind: 'tool',
@@ -89,22 +165,34 @@ const copy = {
         label: '팀 프로젝트',
         items: [
           {
+            title: 'FEAR',
+            description: 'Unity 공포 프로젝트: 서브 이벤트 시스템, 게임플레이 스크립팅, 이벤트 파이프라인.',
+            role: '테크니컬 디렉터\n게임플레이 프로그래머',
+            link: '/projects/Fear',
+            image: '/images/fear/fear-cover.png',
+            video: '/videos/fear/demo.mp4',
+            kind: 'game',
+            org: 'udangtang'
+          },
+          {
             title: 'Big Moth 2',
             description: '3D에서 나방을 잡고 친구가 되는 아기자기한 게임.',
-            role: 'UI/UX & 게임플레이 프로그래머',
+            role: 'UI/UX 프로그래머\n게임플레이 프로그래머',
             link: '/projects/BigMoth2',
             image: '/images/big-moth-2/big-moth-2-cover.png',
+            video: '/videos/big-moth-2/demo.mp4',
             kind: 'game',
             org: 'school'
           },
           {
-            title: 'FEAR',
-            description: 'Unity 공포 프로젝트: 서브 이벤트 시스템, 게임플레이 스크립팅, 이벤트 파이프라인.',
-            role: '테크니컬 디렉터 / 게임플레이 프로그래머',
-            link: '/projects/Fear',
-            image: '/images/fear/fear-cover.png',
+            title: 'Spell It Out',
+            description: '3D 탑뷰 던전 어드벤처: 조이콘이나 마우스로 그림을 그려 마법을 사용해 몬스터를 무찌르는 게임.',
+            role: '컨트롤러 시스템 개발자\n시스템 프로그래머',
+            link: '/projects/SpellItOut',
+            image: '/images/spell-it-out/spell-it-out-cover.png',
+            video: '/videos/spell-it-out/demo.mp4',
             kind: 'game',
-            org: 'udangtang'
+            org: 'school'
           }
         ]
       },
@@ -115,7 +203,7 @@ const copy = {
           {
             title: 'Rundee Item Factory',
             description: 'LLM 기반 아이템 제너레이터 (Unity/UE) · 프리셋 · 밸런스 리포트',
-            role: '툴/시스템 프로그래머',
+            role: '툴 개발자\n시스템 개발자',
             link: '/projects/RundeeItemFactory',
             image: '/images/rundee-item-factory/cover.svg',
             kind: 'tool',
@@ -208,28 +296,7 @@ export default function Projects() {
 
       <div className="project-grid">
         {filteredItems.map((p, i) => (
-          <motion.div
-            key={p.title || i}
-            className="project-card"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: i * 0.15 }}
-            viewport={{ once: true }}
-          >
-            <Link to={p.link || '#'} className="project-link">
-              {p.image ? (
-                <img src={p.image} alt={p.title} className="project-image" />
-              ) : null}
-              <h3>{p.title}</h3>
-              {p.org && (
-                <span className="project-badge">
-                  {text.orgLabels?.[p.org] || p.org}
-                </span>
-              )}
-              <p className="project-role"><strong>{text.roleLabel}:</strong> {p.role}</p>
-              <p>{p.description}</p>
-            </Link>
-          </motion.div>
+          <ProjectCard key={p.title || i} project={p} text={text} />
         ))}
 
         {filteredItems.length === 0 && (
