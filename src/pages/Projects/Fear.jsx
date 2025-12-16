@@ -6,6 +6,9 @@ const copy = {
   en: {
     title: 'FEAR',
     role: 'Technical Director / Gameplay Programmer',
+    period: '2025.05 - 2025.08',
+    teamSize: 'Team Size: 8',
+    tech: 'Unity',
     demo: 'Demo',
     overviewTitle: 'Overview',
     overview: [
@@ -39,6 +42,9 @@ const copy = {
   ko: {
     title: 'FEAR',
     role: '테크니컬 디렉터 / 게임플레이 프로그래머',
+    period: '2025.05 - 2025.08',
+    teamSize: '팀 크기: 8명',
+    tech: 'Unity',
     demo: '데모',
     overviewTitle: '개요',
     overview: [
@@ -131,6 +137,11 @@ export default function Fear() {
   return (
     <div className="project-detail">
       <h1>{t.title}</h1>
+      <div className="project-meta">
+        <span className="meta-item">{t.period}</span>
+        <span className="meta-item">{t.teamSize}</span>
+        <span className="meta-item">{t.tech}</span>
+      </div>
       <h2>{t.demo}</h2>
       <video className="demo-video" controls autoPlay muted loop>
         <source src="/videos/fear/demo.mp4" type="video/mp4" />
@@ -155,6 +166,13 @@ export default function Fear() {
         </>
       )}
 
+      {zoomImage && (
+        <div className="zoom-overlay" onClick={closeZoom}>
+          <img src={zoomImage} alt="Zoomed" className="zoomed-image" />
+        </div>
+      )}
+
+      <h2><strong>Role:</strong> {t.role}</h2>
       <h2>{t.overviewTitle}</h2>
       {t.overview.map((p, idx) => <p key={`ov-${idx}`}>{p}</p>)}
 

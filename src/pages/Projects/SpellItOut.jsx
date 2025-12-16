@@ -10,6 +10,9 @@ export default function SpellItOut() {
       gameplay: 'Gameplay Gallery',
       dev: 'Dev Gallery',
       role: 'Controller System Developer / Systems Programmer',
+      period: '2025.11 - 2025.12',
+      teamSize: 'Team Size: 4',
+      tech: 'Unity',
       overviewTitle: 'Overview',
       overview: [
         'Spell It Out is a 3D top-down dungeon adventure game developed as a school project. Players navigate through rooms, defeating monsters using Nintendo Switch Joy-Con controllers (by swinging or drawing on the Switch screen) or PC mouse input to cast spells, attacks, defense, and healing abilities.',
@@ -42,6 +45,9 @@ export default function SpellItOut() {
       gameplay: '게임플레이 갤러리',
       dev: '개발 갤러리',
       role: '컨트롤러 시스템 개발자 / 시스템 프로그래머',
+      period: '2025.11 - 2025.12',
+      teamSize: '팀 크기: 4명',
+      tech: 'Unity',
       overviewTitle: '개요',
       overview: [
         'Spell It Out는 학교 프로젝트로 개발한 3D 탑뷰 던전 어드벤처 게임입니다. 플레이어는 각 방의 몬스터를 닌텐도 스위치 조이콘을 휘두르거나 스위치 스크린에 직접 그리거나, PC에서는 마우스로 그림을 그려 공격, 마법, 방어, 회복 같은 스킬을 사용해 무찌르고 던전을 빠져나갑니다.',
@@ -120,7 +126,11 @@ export default function SpellItOut() {
   return (
     <div className="project-detail">
       <h1>Spell It Out</h1>
-      
+      <div className="project-meta">
+        <span className="meta-item">{t.period}</span>
+        <span className="meta-item">{t.teamSize}</span>
+        <span className="meta-item">{t.tech}</span>
+      </div>
       <h2>{t.demo}</h2>
       <video className="demo-video" controls autoPlay muted loop>
         <source src="/videos/spell-it-out/demo.mp4" type="video/mp4" />

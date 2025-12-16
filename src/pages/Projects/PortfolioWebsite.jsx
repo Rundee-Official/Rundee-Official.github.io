@@ -9,6 +9,9 @@ export default function PortfolioWebsite() {
       demo: 'Demo',
       gallery: 'Gallery',
       role: 'Full Stack Developer',
+      period: '2025.05 - Current',
+      teamSize: 'Personal Project',
+      tech: 'React',
       overviewTitle: 'Overview',
       overview1: 'This portfolio site was built using React.js with custom Three.js background effects and framer-motion animations. I developed all components from scratch, including dynamic routing with React Router, custom shaders for the background, and a responsive layout.',
       overview2: 'It showcases my projects, experience, and contact info in a clear, performant, and interactive way. I also added background music toggling, conditional backgrounds, and auto-type animations on the homepage.',
@@ -24,6 +27,9 @@ export default function PortfolioWebsite() {
       demo: '데모',
       gallery: '갤러리',
       role: '풀스택 개발자',
+      period: '2025.05 - Current',
+      teamSize: '개인 프로젝트',
+      tech: 'React',
       overviewTitle: '개요',
       overview1: '이 포트폴리오는 React.js로 제작했으며 Three.js 배경 효과와 framer-motion 애니메이션을 추가했습니다. 라우팅, 배경 셰이더, 반응형 레이아웃까지 직접 구성했습니다.',
       overview2: '프로젝트와 경력, 연락처를 빠르게 확인할 수 있도록 배경 음악 토글, 라우트별 배경 전환, 홈 타이핑 애니메이션을 넣어 가볍고 인터랙티브하게 구성했습니다.',
@@ -46,7 +52,11 @@ export default function PortfolioWebsite() {
   return (
     <div className="project-detail">
       <h1>Portfolio Website</h1>
-
+      <div className="project-meta">
+        <span className="meta-item">{t.period}</span>
+        <span className="meta-item">{t.teamSize}</span>
+        <span className="meta-item">{t.tech}</span>
+      </div>
       <h2>{t.demo}</h2>
       <video className="demo-video" controls autoPlay muted loop>
         <source src="/videos/portfolio/demo.mp4" type="video/mp4" />
