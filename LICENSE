@@ -1,0 +1,25 @@
+Copyright (c) 2025 Haneul Lee (Rundee)
+
+All Rights Reserved.
+
+This website and its original source code (excluding third-party libraries and frameworks) 
+are the exclusive property of Haneul Lee (Rundee).
+
+No part of this website's original source code may be reproduced, distributed, or transmitted 
+in any form or by any means, including photocopying, recording, or other electronic or 
+mechanical methods, without the prior written permission of the copyright owner, except in 
+the case of brief quotations embodied in critical reviews and certain other noncommercial uses 
+permitted by copyright law.
+
+For permissions requests, please contact: rundee.official@gmail.com
+
+---
+
+Third-party software used in this project:
+
+- React (MIT License) - https://reactjs.org/
+- React Router (MIT License) - https://reactrouter.com/
+- Framer Motion (MIT License) - https://www.framer.com/motion/
+- Three.js (MIT License) - https://threejs.org/
+
+All third-party software retains their respective licenses as indicated above.

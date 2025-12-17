@@ -1,3 +1,11 @@
+/**
+ * File Name: About.jsx
+ * Author: Haneul Lee (Rundee)
+ * Description: About page component with experience and education timeline
+ * 
+ * Copyright (c) 2025 Haneul Lee (Rundee)
+ */
+
 import './About.css';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
@@ -7,9 +15,11 @@ const COPY = {
     photos: { profile: 'Profile photo', illustration: 'Profile illustration' },
     aboutTitle: 'About Me',
     intro: [
-      <>Hello! I'm <strong>Haneul Lee (a.k.a Rundee)</strong>, a passionate game developer and creative coder based in Redmond, WA. I'm currently studying at DigiPen Institute of Technology, majoring in Computer Science.</>,
-      'I specialize in AI development, pathfinding, and systems programming using C++ and Unreal Engine. I am constantly exploring new ways to make virtual agents behave more intelligently in CQB simulations and tactical environments.',
-      'When I am not coding, I enjoy customizing mods for Fallout 4, playing tactical shooters, and building personal tools.'
+      <>Hello! I'm <strong>Haneul Lee (a.k.a Rundee)</strong>, a passionate game developer and systems programmer based in Redmond, WA. I'm currently pursuing a Bachelor's degree in Computer Science at DigiPen Institute of Technology, specializing in Real-Time Interactive Simulation.</>,
+      'I specialize in game systems architecture, UI/UX programming, and gameplay systems using C++ and Unreal Engine, as well as Unity Engine for rapid prototyping and cross-platform development. My work focuses on creating scalable, maintainable systems that empower designers and enable smooth collaboration across teams.',
+      'With experience as a Technical Director, I\'ve architected and implemented core game systems including event-driven architectures, multiplayer networking solutions, modular quest/mission systems, and custom input abstraction layers. I have a strong interest in AI development and pathfinding, constantly exploring ways to make virtual agents behave more intelligently in tactical and simulation environments.',
+      'Beyond core gameplay systems, I also develop productivity tools and pipelines to streamline development workflows. Whether it\'s LLM-powered content generation tools, automated asset pipelines, or custom editor extensions, I enjoy building solutions that solve real problems faced by development teams.',
+      'When I\'m not coding, I enjoy customizing mods for Fallout 4, playing tactical shooters, and experimenting with new technologies to expand my toolkit.'
     ],
     experienceTitle: 'Experience',
     experience: [
@@ -71,9 +81,11 @@ const COPY = {
     photos: { profile: '프로필 사진', illustration: '프로필 일러스트' },
     aboutTitle: '소개',
     intro: [
-      <>안녕하세요! 저는 <strong>이하늘 (Rundee)</strong>입니다. 워싱턴주 레드먼드에서 활동하는 게임 개발자이자 크리에이티브 코더이며, 현재 DigiPen Institute of Technology에서 컴퓨터공학을 전공하고 있습니다.</>,
-      'C++과 언리얼 엔진을 활용한 AI 개발, 경로 탐색, 시스템 프로그래밍을 전문으로 하며, CQB 시뮬레이션과 전술 환경에서 가상 에이전트가 더 지능적으로 움직이도록 연구하고 있습니다.',
-      '코딩하지 않을 때는 Fallout 4 모드를 커스터마이즈하고, 전술 슈터를 즐기며, 개인용 도구를 만드는 것을 좋아합니다.'
+      <>안녕하세요! 저는 <strong>이하늘 (Rundee)</strong>입니다. 워싱턴주 레드먼드에서 활동하는 게임 개발자이자 시스템 프로그래머이며, 현재 DigiPen Institute of Technology에서 컴퓨터공학 학사 과정을 밟고 있습니다 (전공: 실시간 인터랙티브 시뮬레이션).</>,
+      'C++ 및 언리얼 엔진을 활용한 게임 시스템 아키텍처, UI/UX 프로그래밍, 게임플레이 시스템 개발을 전문으로 하며, 빠른 프로토타이핑과 크로스 플랫폼 개발을 위해 Unity 엔진도 활용합니다. 디자이너를 지원하고 팀 간 원활한 협업을 가능하게 하는 확장 가능하고 유지보수하기 쉬운 시스템을 구축하는 데 중점을 둡니다.',
+      '테크니컬 디렉터 경험을 통해 이벤트 기반 아키텍처, 멀티플레이어 네트워킹 솔루션, 모듈형 퀘스트/미션 시스템, 커스텀 입력 추상화 레이어 등 핵심 게임 시스템을 설계하고 구현해왔습니다. AI 개발과 경로 탐색에도 관심이 많아, 전술 및 시뮬레이션 환경에서 가상 에이전트가 더 지능적으로 행동하도록 연구하고 있습니다.',
+      '핵심 게임플레이 시스템 외에도 개발 워크플로우를 간소화하는 생산성 도구와 파이프라인을 개발합니다. LLM 기반 콘텐츠 생성 도구, 자동화된 에셋 파이프라인, 커스텀 에디터 확장 등 개발팀이 직면한 실제 문제를 해결하는 솔루션을 만드는 것을 즐깁니다.',
+      '코딩하지 않을 때는 Fallout 4 모드를 커스터마이즈하고, 전술 슈터를 즐기며, 새로운 기술을 실험하여 기술 스택을 확장하는 것을 좋아합니다.'
     ],
     experienceTitle: '경력',
     experience: [
@@ -82,7 +94,7 @@ const COPY = {
         date: '2025년 5월 – 현재 · 대한민국 대구 · 하이브리드',
         description: '스튜디오 전체 엔지니어링 방향, 일정·워크플로 관리, 크로스팀 조율을 맡아 여러 프로젝트를 일정에 맞춰 진행합니다.',
         bullets: [
-          'FEAR (구 Catalog: X) – Unity 공포 게임; 핵심 게임플레이를 이끄는 서브 이벤트 시스템을 설계·구현하고, 게임플레이 프로그래밍·이벤트 스크립팅·시스템 연동으로 몰입감 있는 경험을 제공.',
+          'FEAR (구 Catalog: X, Project abnormal) – Unity 공포 게임; 핵심 게임플레이를 이끄는 서브 이벤트 시스템을 설계·구현하고, 게임플레이 프로그래밍·이벤트 스크립팅·시스템 연동으로 몰입감 있는 경험을 제공.',
           'Moored – Maritime Adventure Project – 선박 시스템 아키텍처와 해양 이벤트 메커닉을 주도했으며, 디자인·아트·게임플레이 정렬을 위해 엔지니어링 워크플로, 일정, 업무 분배를 관리.'
         ]
       },
@@ -150,6 +162,8 @@ export default function About() {
           src="/images/about/profile.jpg"
           alt={t.photos.profile}
           className="about-profile"
+          loading="lazy"
+          decoding="async"
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
@@ -158,6 +172,8 @@ export default function About() {
           src="/images/about/profile_Rundee.png"
           alt={t.photos.illustration}
           className="about-profile"
+          loading="lazy"
+          decoding="async"
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, ease: 'easeOut', delay: 0.1 }}
@@ -168,6 +184,8 @@ export default function About() {
       {t.intro.map((paragraph, idx) => (
         <p key={`intro-${idx}`}>{paragraph}</p>
       ))}
+
+      <hr className="section-divider" />
 
       <h2>{t.experienceTitle}</h2>
       <div className="timeline">
@@ -189,6 +207,8 @@ export default function About() {
           </div>
         ))}
       </div>
+
+      <hr className="section-divider" />
 
       <h2>{t.educationTitle}</h2>
       <div className="timeline">

@@ -1,12 +1,20 @@
-import './RundeeItemFactory.css';
-import { useState } from 'react';
+/**
+ * File Name: RundeeItemFactory.jsx
+ * Author: Haneul Lee (Rundee)
+ * Description: Rundee Item Factory project detail page
+ * 
+ * Copyright (c) 2025 Haneul Lee (Rundee)
+ */
+
+import ProjectDetailTemplate from './ProjectDetailTemplate';
 import { useLanguage } from '../../context/LanguageContext';
 
 export default function RundeeItemFactory() {
   const { lang } = useLanguage();
   const copy = {
     en: {
-      period: '2025.11 - Current',
+      title: 'Rundee Item Factory',
+      period: 'Nov 2025 – Present',
       teamSize: 'Personal Project',
       tech: 'Visual Studio C++ / Unity Engine / Unreal Engine (Planned)',
       overviewTitle: 'Overview',
@@ -22,7 +30,8 @@ export default function RundeeItemFactory() {
       ]
     },
     ko: {
-      period: '2025.11 - Current',
+      title: 'Rundee Item Factory',
+      period: '2025년 11월 – 현재',
       teamSize: '개인 프로젝트',
       tech: 'Visual Studio C++ / Unity 엔진 / 언리얼 엔진 (추가 예정)',
       overviewTitle: '개요',
@@ -40,51 +49,39 @@ export default function RundeeItemFactory() {
   };
   const t = copy[lang] || copy.en;
 
-  const [zoomImage, setZoomImage] = useState(null);
-
-  const gallery = ['cover', 'editor', 'dataflow'];
-  const handleZoom = (src) => setZoomImage(src);
-  const closeZoom = () => setZoomImage(null);
+  const galleryImages = [
+    '/images/rundee-item-factory/cover.svg',
+    '/images/rundee-item-factory/editor.svg',
+    '/images/rundee-item-factory/dataflow.svg'
+  ];
 
   return (
-    <div className="project-detail">
-      <h1>Rundee Item Factory</h1>
-      <div className="project-meta">
-        <span className="meta-item">{t.period}</span>
-        <span className="meta-item">{t.teamSize}</span>
-        <span className="meta-item">{t.tech}</span>
-      </div>
-      <h2>{t.overviewTitle}</h2>
-      <p>{t.overview}</p>
-
-      <h2>{t.techTitle}</h2>
-      <p>{t.tech}</p>
-
-      <h2><strong>Role:</strong> {t.role}</h2>
-      <h2>Highlights</h2>
-      <ul className="feature-list">
-        {t.highlights.map((item, idx) => <li key={idx}>{item}</li>)}
-      </ul>
-
-      <div className="carousel-wrapper">
-        <div className="carousel-track">
-          {gallery.concat(gallery).map((name, i) => (
-            <img
-              key={`${name}-${i}`}
-              src={`/images/rundee-item-factory/${name}.svg`}
-              alt={`${name} preview`}
-              onClick={() => handleZoom(`/images/rundee-item-factory/${name}.svg`)}
-            />
-          ))}
-        </div>
-      </div>
-
-      {zoomImage && (
-        <div className="zoom-overlay" onClick={closeZoom}>
-          <img src={zoomImage} alt="Zoomed" className="zoomed-image" />
-        </div>
-      )}
-    </div>
+    <ProjectDetailTemplate
+      title={t.title}
+      meta={{
+        period: t.period,
+        teamSize: t.teamSize,
+        tech: t.tech
+      }}
+      overview={{
+        title: t.overviewTitle,
+        content: t.overview
+      }}
+      customSections={[
+        {
+          title: t.techTitle,
+          content: t.tech
+        }
+      ]}
+      role={t.role}
+      highlights={{
+        title: 'Highlights',
+        items: t.highlights
+      }}
+      devGallery={{
+        title: 'Gallery',
+        images: galleryImages
+      }}
+    />
   );
 }
-

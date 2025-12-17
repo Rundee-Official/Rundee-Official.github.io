@@ -1,16 +1,24 @@
-import './SpellItOut.css';
-import { useEffect, useRef, useState } from 'react';
+/**
+ * File Name: SpellItOut.jsx
+ * Author: Haneul Lee (Rundee)
+ * Description: Spell It Out project detail page
+ * 
+ * Copyright (c) 2025 Haneul Lee (Rundee)
+ */
+
+import ProjectDetailTemplate from './ProjectDetailTemplate';
 import { useLanguage } from '../../context/LanguageContext';
 
 export default function SpellItOut() {
   const { lang } = useLanguage();
   const copy = {
     en: {
+      title: 'Spell It Out',
       demo: 'Demo',
       gameplay: 'Gameplay Gallery',
       dev: 'Dev Gallery',
       role: 'Controller System Developer / Systems Programmer',
-      period: '2025.11 - 2025.12',
+      period: 'Nov 2025 – Dec 2025',
       teamSize: 'Team Size: 4',
       tech: 'Unity',
       overviewTitle: 'Overview',
@@ -41,11 +49,12 @@ export default function SpellItOut() {
       ]
     },
     ko: {
+      title: 'Spell It Out',
       demo: '데모',
       gameplay: '게임플레이 갤러리',
       dev: '개발 갤러리',
       role: '컨트롤러 시스템 개발자 / 시스템 프로그래머',
-      period: '2025.11 - 2025.12',
+      period: '2025년 11월 – 2025년 12월',
       teamSize: '팀 크기: 4명',
       tech: 'Unity',
       overviewTitle: '개요',
@@ -78,39 +87,6 @@ export default function SpellItOut() {
   };
   const t = copy[lang] || copy.en;
 
-  const trackRefGameplay = useRef(null);
-  const trackRefDev = useRef(null);
-  const [zoomImage, setZoomImage] = useState(null);
-
-  useEffect(() => {
-    const startTicker = (ref, speed = 55) => {
-      if (!ref.current) return () => {};
-      let pos = 0, last = performance.now(), rafId;
-      const tick = (now) => {
-        const dt = (now - last) / 1000;
-        pos -= speed * dt;
-        const el = ref.current;
-        if (el) {
-          const loopWidth = el.scrollWidth / 2;
-          if (loopWidth > 0 && pos <= -loopWidth) pos += loopWidth;
-          el.style.transform = `translateX(${pos}px)`;
-        }
-        last = now;
-        rafId = requestAnimationFrame(tick);
-      };
-      rafId = requestAnimationFrame(tick);
-      return () => cancelAnimationFrame(rafId);
-    };
-    const stops = [
-      trackRefGameplay.current ? startTicker(trackRefGameplay, 55) : null,
-      trackRefDev.current ? startTicker(trackRefDev, 55) : null
-    ].filter(Boolean);
-    return () => stops.forEach(stop => stop && stop());
-  }, [lang]);
-
-  const handleZoom = (src) => setZoomImage(src);
-  const closeZoom = () => setZoomImage(null);
-
   const gameplayShots = [
     '/images/spell-it-out/spell-it-out-gameplay1.png',
     '/images/spell-it-out/spell-it-out-gameplay2.png',
@@ -124,81 +100,38 @@ export default function SpellItOut() {
   ];
 
   return (
-    <div className="project-detail">
-      <h1>Spell It Out</h1>
-      <div className="project-meta">
-        <span className="meta-item">{t.period}</span>
-        <span className="meta-item">{t.teamSize}</span>
-        <span className="meta-item">{t.tech}</span>
-      </div>
-      <h2>{t.demo}</h2>
-      <video className="demo-video" controls autoPlay muted loop>
-        <source src="/videos/spell-it-out/demo.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-
-      {gameplayShots.length > 0 && (
-        <>
-          <h2>{t.gameplay}</h2>
-          <div className="carousel-wrapper">
-            <div className="carousel-track" ref={trackRefGameplay}>
-              {gameplayShots.concat(gameplayShots).map((src, i) => (
-                <img
-                  key={`g-${i}-${src}`}
-                  src={src}
-                  alt={`Gameplay ${i + 1}`}
-                  onClick={() => handleZoom(src)}
-                />
-              ))}
-            </div>
-          </div>
-        </>
-      )}
-
-      {zoomImage && (
-        <div className="zoom-overlay" onClick={closeZoom}>
-          <img src={zoomImage} alt="Zoomed" className="zoomed-image" />
-        </div>
-      )}
-
-      <h2><strong>Role:</strong> {t.role}</h2>
-      <h2>{t.overviewTitle}</h2>
-      {t.overview.map((p, idx) => <p key={`ov-${idx}`}>{p}</p>)}
-
-      {devShots.length > 0 && (
-        <>
-          <h2>{t.dev}</h2>
-          <div className="carousel-wrapper">
-            <div className="carousel-track" ref={trackRefDev}>
-              {devShots.concat(devShots).map((src, i) => (
-                <img
-                  key={`d-${i}-${src}`}
-                  src={src}
-                  alt={`Dev ${i + 1}`}
-                  onClick={() => handleZoom(src)}
-                />
-              ))}
-            </div>
-          </div>
-        </>
-      )}
-
-      <h2>{t.highlightsTitle}</h2>
-      <ul className="feature-list">
-        {t.highlights.map((item, idx) => <li key={`hi-${idx}`}>{item}</li>)}
-      </ul>
-
-      <h2>{t.systemsTitle}</h2>
-      <ul className="feature-list">
-        {t.systems.map((item, idx) => <li key={`sys-${idx}`}>{item}</li>)}
-      </ul>
-
-      {zoomImage && (
-        <div className="zoom-overlay" onClick={closeZoom}>
-          <img src={zoomImage} alt="Zoomed" className="zoomed-image" />
-        </div>
-      )}
-    </div>
+    <ProjectDetailTemplate
+      title={t.title}
+      meta={{
+        period: t.period,
+        teamSize: t.teamSize,
+        tech: t.tech
+      }}
+      demoVideo={{
+        title: t.demo,
+        src: '/videos/spell-it-out/demo.mp4'
+      }}
+      gameplayGallery={{
+        title: t.gameplay,
+        images: gameplayShots
+      }}
+      role={t.role}
+      overview={{
+        title: t.overviewTitle,
+        content: t.overview
+      }}
+      devGallery={{
+        title: t.dev,
+        images: devShots
+      }}
+      highlights={{
+        title: t.highlightsTitle,
+        items: t.highlights
+      }}
+      systems={{
+        title: t.systemsTitle,
+        items: t.systems
+      }}
+    />
   );
 }
-

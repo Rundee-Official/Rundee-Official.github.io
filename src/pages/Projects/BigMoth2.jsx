@@ -1,16 +1,24 @@
-import './BigMoth2.css';
-import { useEffect, useRef, useState } from 'react';
+/**
+ * File Name: BigMoth2.jsx
+ * Author: Haneul Lee (Rundee)
+ * Description: Big Moth 2 project detail page
+ * 
+ * Copyright (c) 2025 Haneul Lee (Rundee)
+ */
+
+import ProjectDetailTemplate from './ProjectDetailTemplate';
 import { useLanguage } from '../../context/LanguageContext';
 
 export default function BigMoth2() {
   const { lang } = useLanguage();
   const copy = {
     en: {
+      title: 'Big Moth 2',
       demo: 'Demo',
       gameplay: 'Gameplay Gallery',
       dev: 'Dev Gallery',
       role: 'UI/UX Programmer / Gameplay Programmer',
-      period: '2024.09 - 2025.04',
+      period: 'Sep 2024 – Apr 2025',
       teamSize: 'Team Size: 21',
       tech: 'Unreal Engine',
       overviewTitle: 'Overview',
@@ -42,11 +50,12 @@ export default function BigMoth2() {
       ]
     },
     ko: {
+      title: 'Big Moth 2',
       demo: '데모',
       gameplay: '게임플레이 갤러리',
       dev: '개발 갤러리',
       role: 'UI/UX & 게임플레이 프로그래머',
-      period: '2024.09 - 2025.04',
+      period: '2024년 9월 – 2025년 4월',
       teamSize: '팀 크기: 21명',
       tech: 'Unreal Engine',
       overviewTitle: '개요',
@@ -80,129 +89,48 @@ export default function BigMoth2() {
   };
   const t = copy[lang] || copy.en;
 
-  const [zoomImage, setZoomImage] = useState(null);
-  const trackRefGameplay = useRef(null);
-  const trackRefDev = useRef(null);
-  const handleZoom = (src) => setZoomImage(src);
-  const closeZoom = () => setZoomImage(null);
-
-  useEffect(() => {
-    const startTicker = (ref, speed = 50) => {
-      if (!ref.current) return () => {};
-      let pos = 0;
-      let last = performance.now();
-      let rafId;
-
-      const tick = (now) => {
-        const dt = (now - last) / 1000;
-        pos -= speed * dt;
-        const el = ref.current;
-        if (el) {
-          const loopWidth = el.scrollWidth / 2;
-          if (loopWidth > 0 && pos <= -loopWidth) {
-            pos += loopWidth;
-          }
-          el.style.transform = `translateX(${pos}px)`;
-        }
-        last = now;
-        rafId = requestAnimationFrame(tick);
-      };
-
-      rafId = requestAnimationFrame(tick);
-      return () => cancelAnimationFrame(rafId);
-    };
-
-    const stops = [
-      startTicker(trackRefGameplay, 55),
-      startTicker(trackRefDev, 55),
-    ];
-    return () => stops.forEach(stop => stop && stop());
-  }, [lang]);
-
   return (
-    <div className="project-detail">
-      <h1>Big Moth 2</h1>
-      <div className="project-meta">
-        <span className="meta-item">{t.period}</span>
-        <span className="meta-item">{t.teamSize}</span>
-        <span className="meta-item">{t.tech}</span>
-      </div>
-      <h2>{t.demo}</h2>
-      <video className="demo-video" controls autoPlay muted loop>
-        <source src="/videos/big-moth-2/demo.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-
-      <h2>{t.gameplay}</h2>
-      <div className="carousel-wrapper">
-        <div className="carousel-track" ref={trackRefGameplay}>
-          {[
-            '/images/big-moth-2/big-moth-2-gameplay1.png',
-            '/images/big-moth-2/big-moth-2-gameplay2.png',
-            '/images/big-moth-2/big-moth-2-gameplay3.png'
-          ].concat([
-            '/images/big-moth-2/big-moth-2-gameplay1.png',
-            '/images/big-moth-2/big-moth-2-gameplay2.png',
-            '/images/big-moth-2/big-moth-2-gameplay3.png'
-          ]).map((src, i) => (
-            <img
-              key={src + i}
-              src={src}
-              alt={`Gameplay ${i + 1}`}
-              onClick={() => handleZoom(src)}
-            />
-          ))}
-        </div>
-      </div>
-
-      {zoomImage && (
-        <div className="zoom-overlay" onClick={closeZoom}>
-          <img src={zoomImage} alt="Zoomed" className="zoomed-image" />
-        </div>
-      )}
-      <h2><strong>Role:</strong> {t.role}</h2>
-      <h2>{t.overviewTitle}</h2>
-      {t.overview.map((p, idx) => <p key={`ov-${idx}`}>{p}</p>)}
-      
-      <h2>{t.dev}</h2>
-      <div className="carousel-wrapper">
-        <div className="carousel-track" ref={trackRefDev}>
-          {[
-            '/images/big-moth-2/big-moth-2-dev1.png',
-            '/images/big-moth-2/big-moth-2-dev2.png',
-            '/images/big-moth-2/big-moth-2-dev3.png',
-            '/images/big-moth-2/big-moth-2-dev4.png'
-          ].concat([
-            '/images/big-moth-2/big-moth-2-dev1.png',
-            '/images/big-moth-2/big-moth-2-dev2.png',
-            '/images/big-moth-2/big-moth-2-dev3.png',
-            '/images/big-moth-2/big-moth-2-dev4.png'
-          ]).map((src, i) => (
-            <img
-              key={src + i}
-              src={src}
-              alt={`Dev ${i + 1}`}
-              onClick={() => handleZoom(src)}
-            />
-          ))}
-        </div>
-      </div>
-
-      {zoomImage && (
-        <div className="zoom-overlay" onClick={closeZoom}>
-          <img src={zoomImage} alt="Zoomed" className="zoomed-image" />
-        </div>
-      )}
-
-      <h2>Highlights</h2>
-      <ul className="feature-list">
-        {t.highlights.map((item, idx) => <li key={idx}>{item}</li>)}
-      </ul>
-
-      <h2>{t.systemsTitle}</h2>
-      <ul className="feature-list">
-        {t.systems.map((item, idx) => <li key={`sys-${idx}`}>{item}</li>)}
-      </ul>
-    </div>
+    <ProjectDetailTemplate
+      title={t.title}
+      meta={{
+        period: t.period,
+        teamSize: t.teamSize,
+        tech: t.tech
+      }}
+      demoVideo={{
+        title: t.demo,
+        src: '/videos/big-moth-2/demo.mp4'
+      }}
+      gameplayGallery={{
+        title: t.gameplay,
+        images: [
+          '/images/big-moth-2/big-moth-2-gameplay1.png',
+          '/images/big-moth-2/big-moth-2-gameplay2.png',
+          '/images/big-moth-2/big-moth-2-gameplay3.png'
+        ]
+      }}
+      role={t.role}
+      overview={{
+        title: t.overviewTitle,
+        content: t.overview
+      }}
+      devGallery={{
+        title: t.dev,
+        images: [
+          '/images/big-moth-2/big-moth-2-dev1.png',
+          '/images/big-moth-2/big-moth-2-dev2.png',
+          '/images/big-moth-2/big-moth-2-dev3.png',
+          '/images/big-moth-2/big-moth-2-dev4.png'
+        ]
+      }}
+      highlights={{
+        title: 'Highlights',
+        items: t.highlights
+      }}
+      systems={{
+        title: t.systemsTitle,
+        items: t.systems
+      }}
+    />
   );
 }

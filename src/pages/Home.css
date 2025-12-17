@@ -1,3 +1,11 @@
+/**
+ * File Name: Home.css
+ * Author: Haneul Lee (Rundee)
+ * Description: Home page component styles
+ * 
+ * Copyright (c) 2025 Haneul Lee (Rundee)
+ */
+
 html, body {
   margin: 0;
   padding: 0;
@@ -18,6 +26,7 @@ html, body {
   height: 100vh;
   overflow: hidden;
   margin: 0;
+  background: transparent;
 }
 
 .hero-bg-canvas {
@@ -45,35 +54,112 @@ html, body {
   color: white;
 }
 
-.hero-content h1,
+.hero-content h1 {
+  color: white;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  position: relative;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.hero-content h1::after {
+  content: '';
+  display: block;
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, #1e90ff, #6c5ce7);
+  margin: 1rem auto 0;
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(30, 144, 255, 0.5);
+}
+
 .hero-content p,
-.hero-content span,
-.hero-content button {
+.hero-content span {
   color: white;
 }
 
 .hero-content button {
-  margin-top: 1.5rem;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  background-color: #ffffff22;
-  border: 1px solid #ffffff55;
-  color: inherit;
+  margin-top: 2rem;
+  padding: 0.9rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, rgba(30, 144, 255, 0.2), rgba(108, 92, 231, 0.2));
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+  color: white;
   cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.hero-content button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
 }
 
 .hero-content button:hover {
-  background-color: #ffffff44;
-  border-color: #ffffffcc;
+  background: linear-gradient(135deg, rgba(30, 144, 255, 0.4), rgba(108, 92, 231, 0.4));
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(30, 144, 255, 0.4);
+}
+
+.hero-content button:hover::before {
+  left: 100%;
+}
+
+.hero-content button:active {
+  transform: translateY(0);
 }
 
 .typing-text {
-  display: inline-block;
-  white-space: pre;
-  font-size: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  font-weight: 600;
   text-align: center;
-  font: bold;
+  color: white;
+  margin: 1.5rem 0;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.typing-prefix {
+  color: white;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.typing-content {
+  display: inline-flex;
+  align-items: center;
+  white-space: pre;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  color: white;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.typing-text:hover .typing-content {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px);
 }
 
 .blinking-cursor {
@@ -89,4 +175,20 @@ html, body {
 @keyframes blinkingCursor {
   0%, 100% { opacity: 0; }
   50% { opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .typing-text {
+    font-size: 1.5rem;
+    padding: 1rem 1.5rem;
+  }
+
+  .hero-content button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
 }

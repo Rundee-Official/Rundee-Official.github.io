@@ -1,3 +1,11 @@
+/**
+ * File Name: index.css
+ * Author: Haneul Lee (Rundee)
+ * Description: Global CSS variables and base styles
+ * 
+ * Copyright (c) 2025 Haneul Lee (Rundee)
+ */
+
 :root {
   --bg: #0b0f1a;
   --text: #f4f6fb;
@@ -35,4 +43,9 @@ a:focus-visible, button:focus-visible {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+/* Adjust Korean font size: Slightly reduce to match English visual size */
+html[lang="ko"] {
+  font-size: 95%;
 }

@@ -1,38 +1,175 @@
-import React, { useRef, useState } from 'react';
+/**
+ * File Name: App.jsx
+ * Author: Haneul Lee (Rundee)
+ * Description: Main application component with routing, animations, and camera controls
+ * 
+ * Copyright (c) 2025 Haneul Lee (Rundee)
+ */
+
+import React, { useRef, useState, useEffect, Suspense, lazy } from 'react';
 import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import About from './pages/About';
 import Projects from './pages/Projects';
-import BigMoth2 from './pages/Projects/BigMoth2';
-import Fear from './pages/Projects/Fear';
-import SpellItOut from './pages/Projects/SpellItOut';
-import PortfolioWebsite from './pages/Projects/PortfolioWebsite';
-import RundeeItemFactory from './pages/Projects/RundeeItemFactory';
 import Contact from './pages/Contact';
 import HomeBackground from './components/HomeBackground';
 import { LanguageProvider } from './context/LanguageContext';
 
-function MainRoutesWithBackground() {
+// Lazy load project detail pages for code splitting
+const BigMoth2 = lazy(() => import('./pages/Projects/BigMoth2'));
+const Fear = lazy(() => import('./pages/Projects/Fear'));
+const SpellItOut = lazy(() => import('./pages/Projects/SpellItOut'));
+const RundeeWebsite = lazy(() => import('./pages/Projects/RundeeWebsite'));
+const RundeeItemFactory = lazy(() => import('./pages/Projects/RundeeItemFactory'));
+
+// Loading fallback component for lazy-loaded routes
+const LoadingFallback = () => (
+  <div style={{ 
+    display: 'flex', 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    minHeight: '50vh',
+    color: '#fff'
+  }}>
+    <div>Loading...</div>
+  </div>
+);
+
+// Page order mapping (matches Navbar order)
+const PAGE_ORDER = {
+  '/': 0,
+  '/about': 1,
+  '/projects': 2,
+  '/contact': 3
+};
+
+/**
+ * Get page index from pathname for navigation direction calculation
+ */
+const getPageIndex = (pathname) => {
+  if (pathname === '/') return 0;
+  if (pathname === '/about') return 1;
+  if (pathname.startsWith('/projects')) return 2;
+  if (pathname === '/contact') return 3;
+  return 0;
+};
+
+/**
+ * AnimatedRoutes component handles page transitions with fade effects
+ */
+function AnimatedRoutes({ onDirectionChange }) {
   const location = useLocation();
-  const showBackground = ['/', '/projects', '/contact'].includes(location.pathname);
+  const prevPageIndexRef = useRef(getPageIndex(location.pathname));
+
+  const currentPageIndex = getPageIndex(location.pathname);
+
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [location.pathname]);
+
+  // Handle camera rotation based on navigation direction
+  useEffect(() => {
+    const prevIndex = prevPageIndexRef.current;
+    const currentIndex = currentPageIndex;
+
+    if (prevIndex !== currentIndex) {
+      // Determine direction: positive = right, negative = left
+      const direction = currentIndex > prevIndex ? 1 : -1;
+      
+      if (onDirectionChange) {
+        onDirectionChange(direction);
+      }
+    }
+
+    prevPageIndexRef.current = currentIndex;
+  }, [location.pathname, currentPageIndex, onDirectionChange]);
+
+  // Fade in/out animation variants
+  const fadeVariants = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    exit: { opacity: 0 }
+  };
 
   return (
-    <div className="content-wrapper">
-      {showBackground && <HomeBackground />}
-      <div className="page-content">
-        <Routes>
+    <AnimatePresence mode="wait" initial={false}>
+      <motion.div
+        key={location.pathname}
+        variants={fadeVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        transition={{
+          opacity: { duration: 0.3, ease: 'easeInOut' }
+        }}
+        style={{
+          width: '100%',
+          position: 'relative',
+          zIndex: 1,
+          minHeight: '100vh',
+          backgroundColor: 'transparent'
+        }}
+      >
+        <Routes location={location}>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/projects" element={<Projects />} />
-          <Route path="/projects/BigMoth2" element={<BigMoth2 />} />
-          <Route path="/projects/Fear" element={<Fear />} />
-          <Route path="/projects/SpellItOut" element={<SpellItOut />} />
-          <Route path="/projects/RundeeItemFactory" element={<RundeeItemFactory />} />
-          <Route path="/projects/PortfolioWebsite" element={<PortfolioWebsite />} />
+          <Route 
+            path="/projects/BigMoth2" 
+            element={
+              <Suspense fallback={<LoadingFallback />}>
+                <BigMoth2 />
+              </Suspense>
+            } 
+          />
+          <Route 
+            path="/projects/Fear" 
+            element={
+              <Suspense fallback={<LoadingFallback />}>
+                <Fear />
+              </Suspense>
+            } 
+          />
+          <Route 
+            path="/projects/SpellItOut" 
+            element={
+              <Suspense fallback={<LoadingFallback />}>
+                <SpellItOut />
+              </Suspense>
+            } 
+          />
+          <Route 
+            path="/projects/RundeeItemFactory" 
+            element={
+              <Suspense fallback={<LoadingFallback />}>
+                <RundeeItemFactory />
+              </Suspense>
+            } 
+          />
+          <Route 
+            path="/projects/RundeeWebsite" 
+            element={
+              <Suspense fallback={<LoadingFallback />}>
+                <RundeeWebsite />
+              </Suspense>
+            } 
+          />
           <Route path="/contact" element={<Contact />} />
         </Routes>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+function MainRoutesWithBackground({ onDirectionChange }) {
+  return (
+    <div className="content-wrapper">
+      <div className="page-content">
+        <AnimatedRoutes onDirectionChange={onDirectionChange} />
       </div>
     </div>
   );
@@ -41,6 +178,17 @@ function MainRoutesWithBackground() {
 export default function App() {
   const audioRef = useRef();
   const [isPlaying, setIsPlaying] = useState(false);
+  const [cameraRotation, setCameraRotation] = useState(0);
+
+  /**
+   * Handle camera rotation based on navigation direction
+   * @param {number} direction - 1 for right navigation, -1 for left navigation
+   * 1080 degrees (6π radians) rotation: right = camera rotates left (-1080°), left = camera rotates right (+1080°)
+   */
+  const handleDirectionChange = (direction) => {
+    const rotationAmount = direction > 0 ? -Math.PI * 6 : Math.PI * 6;
+    setCameraRotation(prev => prev + rotationAmount);
+  };
 
   const toggleMusic = () => {
     const audio = audioRef.current;
@@ -67,9 +215,10 @@ export default function App() {
           loop
           style={{ display: 'none' }}
         />
+        <HomeBackground blurAmount={0} cameraRotation={cameraRotation} />
         <Navbar isPlaying={isPlaying} toggleMusic={toggleMusic} />
         <div className="App">
-          <MainRoutesWithBackground />
+          <MainRoutesWithBackground onDirectionChange={handleDirectionChange} />
         </div>
       </Router>
     </LanguageProvider>

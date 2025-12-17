@@ -1,7 +1,18 @@
+/**
+ * File Name: Projects.css
+ * Author: Haneul Lee (Rundee)
+ * Description: Projects page component styles
+ * 
+ * Copyright (c) 2025 Haneul Lee (Rundee)
+ */
+
 .projects {
   padding: 4rem 2rem;
   color: var(--text);
   text-align: center;
+  position: relative;
+  z-index: 1;
+  background: transparent;
 }
 
 .projects-tabs,
@@ -64,7 +75,7 @@
   padding: 1.25rem;
   border-radius: 12px;
   text-align: left;
-  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
   color: var(--text);
   text-decoration: none;
   display: flex;
@@ -78,9 +89,14 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
+.project-card h3 {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
 .project-badge {
   display: inline-block;
-  margin: 0.2rem 0 0.6rem;
+  margin: 0.2rem auto 0.6rem;
   padding: 0.3rem 0.65rem;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.08);
@@ -141,6 +157,18 @@
   color: inherit;
   text-decoration: none;
   display: block;
+  text-align: center;
+}
+
+.project-link > * {
+  text-align: center;
+}
+
+.project-link > h3,
+.project-link > .project-badge,
+.project-link > .project-role,
+.project-link > p {
+  text-align: center;
 }
 
 .project-card:hover .project-image {
@@ -167,8 +195,51 @@
   line-height: 1.4;
 }
 
+.project-card-divider {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  margin: 0.75rem 0;
+  width: 100%;
+}
+
 @media (max-width: 768px) {
+  .projects {
+    padding: 3rem 1rem;
+  }
+
   .project-grid {
     grid-template-columns: 1fr;
+    padding: 0 1rem;
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    max-width: 100%;
+  }
+
+  .projects-tabs,
+  .projects-filters {
+    gap: 0.5rem;
+  }
+
+  .projects-tabs button,
+  .projects-filters button {
+    padding: 0.5rem 0.85rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .projects {
+    padding: 2rem 0.75rem;
+  }
+
+  .project-grid {
+    padding: 0 0.5rem;
+    gap: 1.25rem;
+  }
+
+  .project-media-wrapper {
+    height: 180px;
   }
 }

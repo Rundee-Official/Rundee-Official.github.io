@@ -1,34 +1,108 @@
+/**
+ * File Name: Contact.css
+ * Author: Haneul Lee (Rundee)
+ * Description: Contact page component styles
+ * 
+ * Copyright (c) 2025 Haneul Lee (Rundee)
+ */
+
 .contact {
-  padding: 4rem 2rem;
+  padding: 6rem 2rem 4rem;
+  max-width: 800px;
+  margin: 0 auto;
   color: #fff;
   text-align: center;
+  position: relative;
+  z-index: 1;
+  background: transparent;
 }
 
 .contact h2 {
   font-size: 2rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #fff;
+  font-weight: 600;
+  position: relative;
+}
+
+.contact h2::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #1e90ff, #6c5ce7);
+  margin: 0.5rem auto 0;
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(30, 144, 255, 0.5);
+}
+
+.section-divider {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin: 2rem 0;
+  width: 100%;
+}
+
+.contact p {
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .contact-links {
-  margin-top: 2rem;
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
   justify-content: center;
   flex-wrap: wrap;
+  margin-top: 2rem;
 }
 
-.contact-links a {
-  color: #1e90ff;
+.contact-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
   text-decoration: none;
-  font-weight: bold;
-  font-size: 1.2rem;
-  border: 2px solid #1e90ff;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  transition: all 0.2s ease;
+  color: #fff;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  min-width: 140px;
 }
 
-.contact-links a:hover {
-  background-color: #1e90ff;
-  color: #111;
+.contact-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(30, 144, 255, 0.5);
+  box-shadow: 0 8px 24px rgba(30, 144, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.contact-icon {
+  font-size: 2rem;
+  margin-bottom: 0.25rem;
+}
+
+@media (max-width: 768px) {
+  .contact {
+    padding: 4rem 1.5rem 2rem;
+  }
+
+  .contact h2 {
+    font-size: 1.75rem;
+  }
+
+  .contact-links {
+    gap: 1rem;
+  }
+
+  .contact-link {
+    padding: 1.25rem 1.5rem;
+    min-width: 120px;
+  }
 }

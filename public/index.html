@@ -43,6 +43,60 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script>
+      // ResizeObserver 에러 억제 - 모든 스크립트 로드 전에 실행
+      (function() {
+        const originalError = window.console.error;
+        const originalWarn = window.console.warn;
+        
+        const isResizeObserverError = function(args) {
+          if (!args || args.length === 0) return false;
+          const message = Array.from(args).map(function(arg) {
+            if (!arg) return '';
+            return typeof arg === 'string' ? arg : String(arg);
+          }).join(' ').toLowerCase();
+          return message.includes('resizeobserver') || message.includes('resize observer');
+        };
+        
+        window.console.error = function() {
+          if (!isResizeObserverError(arguments)) {
+            originalError.apply(window.console, arguments);
+          }
+        };
+        
+        window.console.warn = function() {
+          if (!isResizeObserverError(arguments)) {
+            originalWarn.apply(window.console, arguments);
+          }
+        };
+        
+        window.addEventListener('error', function(e) {
+          var message = (e.message || (e.error && e.error.message) || '').toLowerCase();
+          if (message.includes('resizeobserver') || message.includes('resize observer')) {
+            e.stopImmediatePropagation();
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+          }
+        }, true);
+        
+        window.addEventListener('unhandledrejection', function(e) {
+          var reason = String(e.reason || '').toLowerCase();
+          if (reason.includes('resizeobserver') || reason.includes('resize observer')) {
+            e.preventDefault();
+          }
+        });
+        
+        window.onerror = function(message, source, lineno, colno, error) {
+          var msg = (message || '').toLowerCase();
+          var errMsg = (error && error.message || '').toLowerCase();
+          if (msg.includes('resizeobserver') || msg.includes('resize observer') ||
+              errMsg.includes('resizeobserver') || errMsg.includes('resize observer')) {
+            return true;
+          }
+        };
+      })();
+    </script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

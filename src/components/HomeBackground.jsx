@@ -1,3 +1,11 @@
+/**
+ * File Name: HomeBackground.jsx
+ * Author: Haneul Lee (Rundee)
+ * Description: Three.js animated particle background with camera rotation support
+ * 
+ * Copyright (c) 2025 Haneul Lee (Rundee)
+ */
+
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { motion } from 'framer-motion';
@@ -12,8 +20,10 @@ const SPARK_POOL = 60;
 const SPARK_LIFETIME = 0.4;
 const BASE_RADIUS = 4;
 
-export default function HomeBackground() {
+export default function HomeBackground({ blurAmount = 8, cameraRotation = 0 }) {
   const mountRef = useRef();
+  const canvasRef = useRef(null);
+  const cameraRef = useRef(null);
   
   useEffect(() => {
     const mount = mountRef.current;
@@ -29,6 +39,7 @@ export default function HomeBackground() {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x000000, 1);
+    canvasRef.current = renderer.domElement;
     mount.appendChild(renderer.domElement);
     
     const composer = new EffectComposer(renderer);
@@ -150,23 +161,53 @@ export default function HomeBackground() {
     const clock = new THREE.Clock();
     let theta = 0;
     let animationId;
+    let targetRotationY = 0;
+    let currentRotationY = 0;
+    
+    // Global variable for camera rotation target (accessible from useEffect)
+    window.cameraRotationTarget = 0;
     
     const animate = () => {
       const delta = clock.getDelta();
       theta += 0.003;
       mouse.lerp(targetMouse, 0.06);
       
+      // Update camera rotation target
+      if (window.cameraRotationTarget !== undefined) {
+        targetRotationY = window.cameraRotationTarget;
+      }
+      
+      // Camera rotation interpolation with ease-in-out effect
+      // Slow start → fast → slow end
+      const diff = targetRotationY - currentRotationY;
+      // Slower when close, faster when far
+      const speed = Math.abs(diff) > 0.1 ? 0.08 : 0.03;
+      currentRotationY += diff * speed;
+      
       const orbitX = Math.sin(theta) * BASE_RADIUS;
       const orbitZ = Math.cos(theta) * BASE_RADIUS;
       const mouseInfluence = 0.7;
       const mouseTilt = 0.9;
       
-      camera.position.set(
+      // Apply camera rotation
+      const rotationMatrix = new THREE.Matrix4().makeRotationY(currentRotationY);
+      const basePosition = new THREE.Vector3(
         orbitX + mouse.x * mouseInfluence,
         1 + mouse.y * 0.9,
         orbitZ + mouse.y * 0.4
       );
-      camera.lookAt(mouse.x * mouseTilt, mouse.y * mouseTilt * 0.6, 0);
+      basePosition.applyMatrix4(rotationMatrix);
+      
+      camera.position.copy(basePosition);
+      
+      // Apply rotation to lookAt target
+      const lookTarget = new THREE.Vector3(
+        mouse.x * mouseTilt,
+        mouse.y * mouseTilt * 0.6,
+        0
+      );
+      lookTarget.applyMatrix4(rotationMatrix);
+      camera.lookAt(lookTarget);
       
       const time = Date.now() * 0.005;
       
@@ -286,6 +327,22 @@ export default function HomeBackground() {
     };
   }, []);
   
+  // Disable blur (always 0)
+  useEffect(() => {
+    if (canvasRef.current) {
+      canvasRef.current.style.filter = 'blur(0px)';
+    }
+  }, []);
+  
+  // Update camera rotation
+  useEffect(() => {
+    // Animate camera rotation when cameraRotation changes
+    // cameraRotation is in radians (0 = front, Math.PI/2 = left 90°, -Math.PI/2 = right 90°)
+    if (window.cameraRotationTarget !== undefined) {
+      window.cameraRotationTarget = cameraRotation;
+    }
+  }, [cameraRotation]);
+  
   return (
     <motion.div
       ref={mountRef}
@@ -294,6 +351,15 @@ export default function HomeBackground() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.8 }}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        zIndex: 0,
+        pointerEvents: 'none'
+      }}
     />
   );
 }

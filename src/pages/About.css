@@ -1,15 +1,46 @@
+/**
+ * File Name: About.css
+ * Author: Haneul Lee (Rundee)
+ * Description: About page component styles
+ * 
+ * Copyright (c) 2025 Haneul Lee (Rundee)
+ */
+
 .about {
   padding: 10rem 2rem;
   max-width: 800px;
   margin: 0 auto;
   color: #fff;
   line-height: 1.8;
+  position: relative;
+  z-index: 1;
+  background: transparent;
 }
 
 .about h2 {
   font-size: 2rem;
   margin-bottom: 1.5rem;
   text-align: center;
+  color: #fff;
+  font-weight: 600;
+  position: relative;
+}
+
+.about h2::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #1e90ff, #6c5ce7);
+  margin: 0.5rem auto 0;
+  border-radius: 2px;
+}
+
+.section-divider {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin: 3rem 0;
+  width: 100%;
 }
 
 .about p {
@@ -51,29 +82,33 @@
 
 .timeline {
   position: relative;
-  padding-left: 2rem;
+  padding-left: 0;
   margin-top: 2rem;
-  border-left: 2px solid #777;
 }
 
 .timeline-item {
   position: relative;
   margin-bottom: 2rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.timeline-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
 }
 
 .timeline-dot {
-  position: absolute;
-  left: -10px;
-  top: 6px;
-  width: 12px;
-  height: 12px;
-  background-color: #6cf;
-  border-radius: 50%;
-  border: 2px solid #fff;
+  display: none;
 }
 
 .timeline-content {
-  padding-left: 0.5rem;
+  padding-left: 0;
   color: #ddd;
 }
 
@@ -82,26 +117,87 @@
 }
 
 .timeline-content h3 {
-  font-size: 1.1rem;
-  margin-bottom: 0.25rem;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
   color: #fff;
+  font-weight: 600;
 }
 
 .timeline-date {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #aaa;
-  display: block;
-  margin-bottom: 0.5rem;
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  margin-bottom: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .timeline-details {
-  margin: 0 0 1rem 1.2rem;
-  padding: 0;
-  list-style: disc;
+  margin: 0 0 1rem 1.5rem;
+  padding-left: 1.5rem;
+  list-style-type: disc;
   color: #ccc;
   line-height: 1.6;
 }
 
-.timeline-details li + li {
-  margin-top: 0.5rem;
+.timeline-details li {
+  margin-bottom: 0.5rem;
+  list-style-type: disc;
+}
+
+@media (max-width: 768px) {
+  .about {
+    padding: 6rem 1.5rem 4rem;
+  }
+
+  .about h2 {
+    font-size: 1.75rem;
+  }
+
+  .about p {
+    font-size: 1rem;
+  }
+
+  .about-photos {
+    gap: 1rem;
+  }
+
+  .about-profile {
+    width: 120px;
+    height: 120px;
+  }
+
+  .timeline-item {
+    padding: 1.25rem;
+  }
+
+  .timeline-content h3 {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about {
+    padding: 5rem 1rem 3rem;
+  }
+
+  .about h2 {
+    font-size: 1.5rem;
+  }
+
+  .about-profile {
+    width: 100px;
+    height: 100px;
+  }
+
+  .timeline-item {
+    padding: 1rem;
+  }
+
+  .timeline-details {
+    margin-left: 1rem;
+    padding-left: 1rem;
+  }
 }

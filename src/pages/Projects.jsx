@@ -1,12 +1,23 @@
+/**
+ * File Name: Projects.jsx
+ * Author: Haneul Lee (Rundee)
+ * Description: Projects page component with filtering and project cards
+ * 
+ * Copyright (c) 2025 Haneul Lee (Rundee)
+ */
+
 import { useEffect, useMemo, useState, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import './Projects.css';
 import { useLanguage } from '../context/LanguageContext';
 
-function ProjectCard({ project, text }) {
+function ProjectCard({ project, text, isExisting = false }) {
   const [isHovered, setIsHovered] = useState(false);
   const videoRef = useRef(null);
+  const cardRef = useRef(null);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (isHovered && project.video && videoRef.current) {
@@ -17,23 +28,71 @@ function ProjectCard({ project, text }) {
     }
   }, [isHovered, project.video]);
 
+  const handleClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (cardRef.current) {
+      const rect = cardRef.current.getBoundingClientRect();
+      // Pass card position and size information via location.state
+      const cardData = {
+        x: rect.left,
+        y: rect.top,
+        width: rect.width,
+        height: rect.height
+      };
+      
+      // Pass expansion animation information via state on navigation
+      navigate(project.link || '#', {
+        state: {
+          expandAnimation: true,
+          cardData: cardData
+        }
+      });
+    } else {
+      // Set state even if card ref is unavailable (navigation without animation)
+      navigate(project.link || '#', {
+        state: {
+          expandAnimation: true
+        }
+      });
+    }
+  };
+
   return (
     <motion.div
+      ref={cardRef}
       className="project-card"
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      viewport={{ once: true }}
+      layout
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ 
+        opacity: 0, 
+        scale: 0.8,
+        transition: { duration: 0.3 }
+      }}
+      transition={{ 
+        opacity: { duration: 0.3, delay: isExisting ? 0 : 0.5 }, // New cards appear after layout animation
+        scale: { duration: 0.3, delay: isExisting ? 0 : 0.5 },
+        layout: { 
+          type: 'spring',
+          stiffness: 300,
+          damping: 30,
+          mass: 0.5
+        }
+      }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Link to={project.link || '#'} className="project-link">
+      <div onClick={handleClick} className="project-link" style={{ cursor: 'pointer' }}>
         <div className="project-media-wrapper">
           {project.image && (
             <img 
               src={project.image} 
               alt={project.title} 
               className={`project-image ${isHovered && project.video ? 'hidden' : ''}`}
+              loading="lazy"
+              decoding="async"
             />
           )}
           {project.video && (
@@ -48,13 +107,17 @@ function ProjectCard({ project, text }) {
           )}
         </div>
         <h3>{project.title}</h3>
-        {project.org && (
+        {(project.kind || project.org) && (
           <span className="project-badge">
-            {text.orgLabels?.[project.org] || project.org}
+            {project.org 
+              ? (text.orgLabels?.[project.org] || project.org)
+              : (text.filters?.[project.kind] || project.kind)
+            }
           </span>
         )}
+        {(project.kind || project.org) && <hr className="project-card-divider" />}
         <p className="project-role">
-          <strong>{text.roleLabel}:</strong><br />
+          <strong>{text.roleLabel}</strong><br />
           {project.role.split('\n').map((line, idx) => (
             <span key={idx}>
               {line}
@@ -62,8 +125,9 @@ function ProjectCard({ project, text }) {
             </span>
           ))}
         </p>
+        <hr className="project-card-divider" />
         <p>{project.description}</p>
-      </Link>
+      </div>
     </motion.div>
   );
 }
@@ -133,11 +197,11 @@ const copy = {
             org: 'personal'
           },
           {
-            title: 'Portfolio Website',
+            title: 'Rundee Website',
             description: 'React + Three.js portfolio with animated background and routing.',
             role: 'Full Stack Developer',
-            link: '/projects/PortfolioWebsite',
-            image: '/images/portfolio-webpage/portfolio-webpage.png',
+            link: '/projects/RundeeWebsite',
+            image: '/images/rundee-website/rundee-website-cover.png',
             kind: 'web',
             org: 'personal'
           }
@@ -210,11 +274,11 @@ const copy = {
             org: 'personal'
           },
           {
-            title: 'Portfolio Website',
+            title: 'Rundee Website',
             description: 'React + Three.js 포트폴리오, 애니메이티드 배경과 라우팅.',
             role: '풀스택 개발자',
-            link: '/projects/PortfolioWebsite',
-            image: '/images/portfolio-webpage/portfolio-webpage.png',
+            link: '/projects/RundeeWebsite',
+            image: '/images/rundee-website/rundee-website-cover.png',
             kind: 'web',
             org: 'personal'
           }
@@ -256,10 +320,19 @@ export default function Projects() {
     return ['all', ...Array.from(set)];
   }, [activeCategory, filterMode]);
 
-  const filteredItems = (activeCategory.items || []).filter((item) => {
-    const key = filterMode === 'kind' ? item.kind : item.org;
-    return orgFilter === 'all' || key === orgFilter;
-  });
+  const filteredItems = useMemo(() => {
+    return (activeCategory.items || []).filter((item) => {
+      const key = filterMode === 'kind' ? item.kind : item.org;
+      return orgFilter === 'all' || key === orgFilter;
+    });
+  }, [activeCategory.items, filterMode, orgFilter]);
+
+  // Track previously filtered items (to distinguish existing cards from new ones)
+  const prevFilteredItemsRef = useRef(filteredItems.map(p => p.title));
+  
+  useEffect(() => {
+    prevFilteredItemsRef.current = filteredItems.map(p => p.title);
+  }, [filteredItems]);
 
   return (
     <section className="projects">
@@ -294,15 +367,36 @@ export default function Projects() {
         ))}
       </div>
 
-      <div className="project-grid">
-        {filteredItems.map((p, i) => (
-          <ProjectCard key={p.title || i} project={p} text={text} />
-        ))}
+      <motion.div 
+        className="project-grid"
+        layout
+      >
+        <AnimatePresence mode="popLayout" initial={false}>
+          {filteredItems.map((p) => {
+            // Check if card existed in previous filter state
+            const isExisting = prevFilteredItemsRef.current.includes(p.title);
+            return (
+              <ProjectCard 
+                key={p.title} 
+                project={p} 
+                text={text}
+                isExisting={isExisting} // No delay for existing cards
+              />
+            );
+          })}
+        </AnimatePresence>
 
         {filteredItems.length === 0 && (
-          <p className="projects-empty">{text.empty}</p>
+          <motion.p 
+            className="projects-empty"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            {text.empty}
+          </motion.p>
         )}
-      </div>
+      </motion.div>
     </section>
   );
 }
