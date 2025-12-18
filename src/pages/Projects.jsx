@@ -18,6 +18,7 @@ function ProjectCard({ project, text, isExisting = false }) {
   const cardRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const { lang } = useLanguage();
 
   useEffect(() => {
     if (isHovered && project.video && videoRef.current) {
@@ -125,6 +126,48 @@ function ProjectCard({ project, text, isExisting = false }) {
             </span>
           ))}
         </p>
+        {project.tech && project.tech.length > 0 && (
+          <>
+            <hr className="project-card-divider" />
+            <div className="project-tags">
+              <span className="project-tags-label">{text.tags}:</span>
+              <div className="project-tags-list">
+                {project.tech.map((tag, idx) => {
+                  const iconMap = {
+                    'Unity': 'unity',
+                    'C#': 'csharp',
+                    'Unity Netcode': 'unity',
+                    'Unreal Engine': 'unrealengine',
+                    'Blueprints': 'unrealengine',
+                    'C++': 'cplusplus',
+                    'React': 'react',
+                    'Three.js': 'threedotjs',
+                    'Framer Motion': 'framer',
+                    'React Router': 'reactrouter',
+                    'Ollama': 'ollama',
+                    'Nintendo Switch API': 'nintendo'
+                  };
+                  const iconName = iconMap[tag] || tag.toLowerCase().replace(/\s+/g, '');
+                  const iconUrl = `https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/${iconName}.svg`;
+                  return (
+                    <span key={idx} className="project-tag-icon-wrapper" title={tag}>
+                      <img 
+                        src={iconUrl} 
+                        alt={tag}
+                        className="project-tag-icon"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.nextSibling.style.display = 'inline';
+                        }}
+                      />
+                      <span className="project-tag-fallback" style={{ display: 'none' }}>{tag}</span>
+                    </span>
+                  );
+                })}
+              </div>
+            </div>
+          </>
+        )}
         <hr className="project-card-divider" />
         <p>{project.description}</p>
       </div>
@@ -148,6 +191,11 @@ const copy = {
     orgLabels: { school: 'School Project', udangtang: 'Udangtang Studio', personal: 'Personal' },
     categories: [
       {
+        id: 'all',
+        label: 'All',
+        items: []
+      },
+      {
         id: 'team',
         label: 'Team Projects',
         items: [
@@ -159,7 +207,10 @@ const copy = {
             image: '/images/fear/fear-cover.png',
             video: '/videos/fear/demo.mp4',
             kind: 'game',
-            org: 'udangtang'
+            org: 'udangtang',
+            tech: ['Unity', 'C#'],
+            date: '2025-05',
+            order: 1
           },
           {
             title: 'Big Moth 2',
@@ -169,7 +220,10 @@ const copy = {
             image: '/images/big-moth-2/big-moth-2-cover.png',
             video: '/videos/big-moth-2/demo.mp4',
             kind: 'game',
-            org: 'school'
+            org: 'school',
+            tech: ['Unreal Engine', 'C++'],
+            date: '2024-09',
+            order: 2
           },
           {
             title: 'Spell It Out',
@@ -179,7 +233,10 @@ const copy = {
             image: '/images/spell-it-out/spell-it-out-cover.png',
             video: '/videos/spell-it-out/demo.mp4',
             kind: 'game',
-            org: 'school'
+            org: 'school',
+            tech: ['Unity', 'C#', 'Nintendo Switch API'],
+            date: '2025-11',
+            order: 3
           }
         ]
       },
@@ -194,7 +251,10 @@ const copy = {
             link: '/projects/RundeeItemFactory',
             image: '/images/rundee-item-factory/cover.svg',
             kind: 'tool',
-            org: 'personal'
+            org: 'personal',
+            tech: ['C++', 'Unity', 'Unreal Engine', 'Ollama'],
+            date: '2025-11',
+            order: 1
           },
           {
             title: 'Rundee Website',
@@ -203,12 +263,25 @@ const copy = {
             link: '/projects/RundeeWebsite',
             image: '/images/rundee-website/rundee-website-cover.png',
             kind: 'web',
-            org: 'personal'
+            org: 'personal',
+            tech: ['React', 'Three.js', 'Framer Motion', 'React Router'],
+            date: '2025-05',
+            order: 2
           }
         ]
       }
     ],
-    empty: 'No projects to show yet.'
+    empty: 'No projects to show yet.',
+    searchPlaceholder: 'Search projects...',
+    sortLabel: 'Sort by',
+    sortOptions: {
+      nameAsc: 'Name (A-Z)',
+      nameDesc: 'Name (Z-A)',
+      dateDesc: 'Newest First',
+      dateAsc: 'Oldest First'
+    },
+    count: 'Showing {count} project{plural}',
+    tags: 'Tech Stack'
   },
   ko: {
     title: '프로젝트',
@@ -225,6 +298,11 @@ const copy = {
     orgLabels: { school: '학교 프로젝트', udangtang: '우당탕 스튜디오', personal: '개인' },
     categories: [
       {
+        id: 'all',
+        label: '전체',
+        items: []
+      },
+      {
         id: 'team',
         label: '팀 프로젝트',
         items: [
@@ -236,7 +314,10 @@ const copy = {
             image: '/images/fear/fear-cover.png',
             video: '/videos/fear/demo.mp4',
             kind: 'game',
-            org: 'udangtang'
+            org: 'udangtang',
+            tech: ['Unity', 'C#'],
+            date: '2025-05',
+            order: 1
           },
           {
             title: 'Big Moth 2',
@@ -246,7 +327,10 @@ const copy = {
             image: '/images/big-moth-2/big-moth-2-cover.png',
             video: '/videos/big-moth-2/demo.mp4',
             kind: 'game',
-            org: 'school'
+            org: 'school',
+            tech: ['Unreal Engine', 'C++'],
+            date: '2024-09',
+            order: 2
           },
           {
             title: 'Spell It Out',
@@ -256,7 +340,10 @@ const copy = {
             image: '/images/spell-it-out/spell-it-out-cover.png',
             video: '/videos/spell-it-out/demo.mp4',
             kind: 'game',
-            org: 'school'
+            org: 'school',
+            tech: ['Unity', 'C#', 'Nintendo Switch API'],
+            date: '2025-11',
+            order: 3
           }
         ]
       },
@@ -271,7 +358,10 @@ const copy = {
             link: '/projects/RundeeItemFactory',
             image: '/images/rundee-item-factory/cover.svg',
             kind: 'tool',
-            org: 'personal'
+            org: 'personal',
+            tech: ['C++', 'Unity', 'Unreal Engine', 'Ollama'],
+            date: '2025-11',
+            order: 1
           },
           {
             title: 'Rundee Website',
@@ -280,12 +370,25 @@ const copy = {
             link: '/projects/RundeeWebsite',
             image: '/images/rundee-website/rundee-website-cover.png',
             kind: 'web',
-            org: 'personal'
+            org: 'personal',
+            tech: ['React', 'Three.js', 'Framer Motion', 'React Router'],
+            date: '2025-05',
+            order: 2
           }
         ]
       }
     ],
-    empty: '표시할 프로젝트가 없습니다.'
+    empty: '표시할 프로젝트가 없습니다.',
+    searchPlaceholder: '프로젝트 검색...',
+    sortLabel: '정렬',
+    sortOptions: {
+      nameAsc: '이름 (가-하)',
+      nameDesc: '이름 (하-가)',
+      dateDesc: '최신순',
+      dateAsc: '오래된순'
+    },
+    count: '{count}개의 프로젝트',
+    tags: '기술 스택'
   }
 };
 
@@ -296,36 +399,107 @@ export default function Projects() {
   const [categoryId, setCategoryId] = useState(categories[0]?.id || '');
   const [orgFilter, setOrgFilter] = useState('all');
   const [filterMode, setFilterMode] = useState('org'); // 'org' | 'kind'
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    setCategoryId(categories[0]?.id || '');
+    // Default to team category (second one after all)
+    const defaultCategory = categories.find(cat => cat.id === 'team') || categories[1] || categories[0];
+    setCategoryId(defaultCategory?.id || '');
     setOrgFilter('all');
-    setFilterMode(categories[0]?.id === 'individual' ? 'kind' : 'org');
+    const firstCategoryId = defaultCategory?.id || '';
+    if (firstCategoryId === 'all') {
+      setFilterMode('org');
+    } else {
+      setFilterMode(firstCategoryId === 'individual' ? 'kind' : 'org');
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lang]);
 
   const activeCategory = categories.find(c => c.id === categoryId) || categories[0] || { items: [] };
 
   useEffect(() => {
-    setFilterMode(categoryId === 'individual' ? 'kind' : 'org');
+    if (categoryId === 'all') {
+      setFilterMode('org');
+    } else {
+      setFilterMode(categoryId === 'individual' ? 'kind' : 'org');
+    }
     setOrgFilter('all');
   }, [categoryId]);
 
+  // Get all items when 'all' category is selected
+  const allItems = useMemo(() => {
+    if (categoryId === 'all') {
+      // Get items in order: team first, then individual
+      const teamItems = categories.find(cat => cat.id === 'team')?.items || [];
+      const individualItems = categories.find(cat => cat.id === 'individual')?.items || [];
+      return [...teamItems, ...individualItems];
+    }
+    return activeCategory.items || [];
+  }, [categoryId, categories, activeCategory]);
+
   const filterOptions = useMemo(() => {
     const set = new Set();
-    (activeCategory.items || []).forEach(item => {
+    allItems.forEach(item => {
       const key = filterMode === 'kind' ? item.kind : item.org;
       if (key) set.add(key);
     });
-    return ['all', ...Array.from(set)];
-  }, [activeCategory, filterMode]);
+    const options = Array.from(set);
+    // Sort filter options: for org, prioritize udangtang -> school -> personal
+    if (filterMode === 'org') {
+      const order = ['udangtang', 'school', 'personal'];
+      options.sort((a, b) => {
+        const aIndex = order.indexOf(a);
+        const bIndex = order.indexOf(b);
+        if (aIndex === -1 && bIndex === -1) return 0;
+        if (aIndex === -1) return 1;
+        if (bIndex === -1) return -1;
+        return aIndex - bIndex;
+      });
+    }
+    return ['all', ...options];
+  }, [allItems, filterMode]);
 
   const filteredItems = useMemo(() => {
-    return (activeCategory.items || []).filter((item) => {
+    let items = allItems.filter((item) => {
       const key = filterMode === 'kind' ? item.kind : item.org;
       return orgFilter === 'all' || key === orgFilter;
     });
-  }, [activeCategory.items, filterMode, orgFilter]);
+
+    // Apply search filter
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase().trim();
+      items = items.filter((item) => {
+        const titleMatch = item.title?.toLowerCase().includes(query);
+        const descMatch = item.description?.toLowerCase().includes(query);
+        const techMatch = item.tech?.some(t => t.toLowerCase().includes(query));
+        return titleMatch || descMatch || techMatch;
+      });
+    }
+
+    // Apply sorting: team projects first, then individual projects
+    // Within each category, use order field if available, otherwise use dateDesc
+    const sorted = [...items].sort((a, b) => {
+      // First, separate team projects (org: udangtang or school) from individual projects (org: personal)
+      const aIsTeam = a.org === 'udangtang' || a.org === 'school';
+      const bIsTeam = b.org === 'udangtang' || b.org === 'school';
+      
+      // Team projects come before individual projects
+      if (aIsTeam && !bIsTeam) return -1;
+      if (!aIsTeam && bIsTeam) return 1;
+      
+      // Within the same category (both team or both individual), use order or date
+      if (a.order !== undefined && b.order !== undefined) {
+        return a.order - b.order;
+      }
+      // If only one has order, prioritize it
+      if (a.order !== undefined) return -1;
+      if (b.order !== undefined) return 1;
+      // If neither has order, use dateDesc (newest first)
+      return (b.date || '').localeCompare(a.date || '');
+    });
+
+    return sorted;
+  }, [allItems, filterMode, orgFilter, searchQuery]);
 
   // Track previously filtered items (to distinguish existing cards from new ones)
   const prevFilteredItemsRef = useRef(filteredItems.map(p => p.title));
@@ -337,6 +511,19 @@ export default function Projects() {
   return (
     <section className="projects">
       <h1>{text.title}</h1>
+
+      <div className="projects-controls">
+        <div className="projects-search">
+          <input
+            type="text"
+            placeholder={text.searchPlaceholder}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="projects-search-input"
+            aria-label={text.searchPlaceholder}
+          />
+        </div>
+      </div>
 
       <div className="projects-tabs" role="tablist" aria-label={text.title}>
         {categories.map((cat) => (

@@ -81,18 +81,27 @@ export default function HomeBackground({ blurAmount = 8, cameraRotation = 0 }) {
       scene.add(s);
     }
     
-    // Plasma-like link material
+    // Plasma-like link material with blue color palette
     const maxLinks = (PARTICLE_COUNT * (PARTICLE_COUNT - 1)) / 2;
-    const baseColor = new THREE.Color(0x55ffff);
+    const colorPalette = [
+      new THREE.Color(0x00ffff), // Cyan
+      new THREE.Color(0x0080ff), // Blue
+      new THREE.Color(0x00aaff), // Light Blue
+      new THREE.Color(0x0040ff), // Medium Blue
+      new THREE.Color(0x87ceeb), // Sky Blue
+      new THREE.Color(0x4682b4), // Steel Blue
+      new THREE.Color(0x00bfff), // Deep Sky Blue
+      new THREE.Color(0x4169e1), // Royal Blue
+    ];
     const cylinderPool = [];
     
     for (let i = 0; i < maxLinks; i++) {
       const geo = new THREE.CylinderGeometry(LINE_RADIUS, LINE_RADIUS, 1, 6, 1, true);
       const mat = new THREE.MeshStandardMaterial({
-        color: baseColor.clone(),
+        color: colorPalette[i % colorPalette.length].clone(),
         transparent: true,
         opacity: 0.22,
-        emissive: new THREE.Color(0x00ffff),
+        emissive: colorPalette[i % colorPalette.length].clone(),
         emissiveIntensity: 0.4
       });
       const mesh = new THREE.Mesh(geo, mat);
@@ -101,14 +110,22 @@ export default function HomeBackground({ blurAmount = 8, cameraRotation = 0 }) {
       cylinderPool.push(mesh);
     }
     
-    // Spark particles (for link hits)
-    const sparkGeometry = new THREE.SphereGeometry(0.02, 6, 6);
+    // Spark particles (for link hits) with blue color palette
+    const sparkGeometry = new THREE.SphereGeometry(0.01, 6, 6);
     const sparkPool = [];
     const sparkState = [];
     const sparkVelocity = [];
+    const sparkColorPalette = [
+      new THREE.Color(0x00ffff), // Cyan
+      new THREE.Color(0x0080ff), // Blue
+      new THREE.Color(0x00aaff), // Light Blue
+      new THREE.Color(0x87ceeb), // Sky Blue
+      new THREE.Color(0x00bfff), // Deep Sky Blue
+      new THREE.Color(0x4169e1), // Royal Blue
+    ];
     for (let i = 0; i < SPARK_POOL; i++) {
       const mat = new THREE.MeshBasicMaterial({
-        color: baseColor,
+        color: sparkColorPalette[i % sparkColorPalette.length],
         transparent: true,
         opacity: 0,
         blending: THREE.AdditiveBlending,
@@ -133,8 +150,13 @@ export default function HomeBackground({ blurAmount = 8, cameraRotation = 0 }) {
           (Math.random() - 0.5) * spread
         );
         s.position.copy(position).add(jitter);
-        const scale = 0.32 + Math.random() * 0.36;
+        const scale = 0.15 + Math.random() * 0.15;
         s.scale.setScalar(scale);
+        
+        // Random blue spark
+        const sparkColor = sparkColorPalette[Math.floor(Math.random() * sparkColorPalette.length)].clone();
+        s.material.color.copy(sparkColor);
+        
         st.life = SPARK_LIFETIME;
         st.maxLife = SPARK_LIFETIME;
         s.material.opacity = 0.7;
@@ -211,21 +233,8 @@ export default function HomeBackground({ blurAmount = 8, cameraRotation = 0 }) {
       
       const time = Date.now() * 0.005;
       
-      for (let i = 0; i < PARTICLE_COUNT; i++) {
-        const s = spheres[i];
-        s.position.add(velocities[i]);
-        ['x', 'y', 'z'].forEach(axis => {
-          if (s.position[axis] > 3 || s.position[axis] < -3) {
-            velocities[i][axis] *= -1;
-          }
-        });
-        
-        const dist = s.position.distanceTo(camera.position);
-        const scale = THREE.MathUtils.clamp(3 - dist, 0.25, 1.6);
-        s.scale.setScalar(scale);
-        
-        s.material.emissiveIntensity = 0.35 + 0.22 * Math.sin(time + i * 0.8);
-      }
+      // Track which particles are connected
+      const isConnected = new Array(PARTICLE_COUNT).fill(false);
       
       let usedCount = 0;
       for (let i = 0; i < PARTICLE_COUNT; i++) {
@@ -233,6 +242,9 @@ export default function HomeBackground({ blurAmount = 8, cameraRotation = 0 }) {
           const a = spheres[i].position;
           const b = spheres[j].position;
           if (a.distanceTo(b) < MAX_DISTANCE) {
+            isConnected[i] = true;
+            isConnected[j] = true;
+            
             if (usedCount >= cylinderPool.length) break;
             
             const cyl = cylinderPool[usedCount++];
@@ -249,10 +261,19 @@ export default function HomeBackground({ blurAmount = 8, cameraRotation = 0 }) {
             cyl.setRotationFromQuaternion(quat);
             cyl.scale.set(1, len, 1);
             
-            // ✨ Plasma pulsating effect
+            // Plasma pulsating effect with blue color variations
             const pulse = 0.22 + 0.22 * Math.sin(time + i * 0.5 + j * 0.3);
             cyl.material.emissiveIntensity = pulse;
             cyl.material.opacity = pulse;
+            
+            // Dynamic color based on connection index and time
+            const linkColorIndex = Math.floor((i * 7 + j * 11 + time * 5) % colorPalette.length);
+            const linkColor = colorPalette[linkColorIndex].clone();
+            const colorShift = Math.sin(time + i * 0.3 + j * 0.2) * 0.15;
+            linkColor.offsetHSL(colorShift, 0.3, 0);
+            
+            cyl.material.color.lerp(linkColor, 0.7);
+            cyl.material.emissive.lerp(linkColor, 0.7);
             
             // Small spark burst emitted from node positions when a link is active
             if (Math.random() < 0.03) {
@@ -261,6 +282,54 @@ export default function HomeBackground({ blurAmount = 8, cameraRotation = 0 }) {
               spawnSpark(origin, 0.12, 2);
             }
           }
+        }
+      }
+      
+      // Update particles with connection-based blue color effects
+      const unconnectedColor = new THREE.Color(0xffffff);
+      const particleColorPalette = [
+        new THREE.Color(0x00ffff), // Cyan
+        new THREE.Color(0x0080ff), // Blue
+        new THREE.Color(0x00aaff), // Light Blue
+        new THREE.Color(0x0040ff), // Medium Blue
+        new THREE.Color(0x87ceeb), // Sky Blue
+        new THREE.Color(0x4682b4), // Steel Blue
+        new THREE.Color(0x00bfff), // Deep Sky Blue
+        new THREE.Color(0x4169e1), // Royal Blue
+      ];
+      
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const s = spheres[i];
+        s.position.add(velocities[i]);
+        ['x', 'y', 'z'].forEach(axis => {
+          if (s.position[axis] > 3 || s.position[axis] < -3) {
+            velocities[i][axis] *= -1;
+          }
+        });
+        
+        const dist = s.position.distanceTo(camera.position);
+        const scale = THREE.MathUtils.clamp(3 - dist, 0.25, 1.6);
+        s.scale.setScalar(scale);
+        
+        if (isConnected[i]) {
+          // Connected particles: vibrant blue colors from palette based on index and time
+          const colorIndex = Math.floor((i + time * 10) % particleColorPalette.length);
+          const targetColor = particleColorPalette[colorIndex].clone();
+          
+          // Add subtle hue shift over time for dynamic blue color variation
+          const hueShift = Math.sin(time * 0.5 + i * 0.1) * 0.05;
+          targetColor.offsetHSL(hueShift, 0.2, 0);
+          
+          s.material.color.lerp(targetColor, 0.8);
+          s.material.emissive.lerp(targetColor, 0.6);
+          const baseIntensity = 0.5 + 0.3 * Math.sin(time + i * 0.8);
+          s.material.emissiveIntensity = baseIntensity;
+        } else {
+          // Unconnected particles: dimmer white with lower intensity
+          s.material.color.lerp(unconnectedColor, 0.8);
+          s.material.emissive.lerp(new THREE.Color(0x333333), 0.6);
+          const baseIntensity = 0.2 + 0.1 * Math.sin(time + i * 0.8);
+          s.material.emissiveIntensity = baseIntensity;
         }
       }
       
@@ -327,10 +396,10 @@ export default function HomeBackground({ blurAmount = 8, cameraRotation = 0 }) {
     };
   }, []);
   
-  // Disable blur (always 0)
+  // Apply consistent blur effect to background
   useEffect(() => {
     if (canvasRef.current) {
-      canvasRef.current.style.filter = 'blur(0px)';
+      canvasRef.current.style.filter = 'blur(2px)';
     }
   }, []);
   

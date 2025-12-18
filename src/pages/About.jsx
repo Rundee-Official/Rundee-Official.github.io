@@ -75,7 +75,15 @@ const COPY = {
         description: 'Bachelor of Science in Computer Science – Real-Time Interactive Simulation',
         extra: 'Student Council President, Vice-President'
       }
-    ]
+    ],
+    techStackTitle: 'Tech Stack',
+    techStack: {
+      languages: ['C++', 'C#', 'JavaScript', 'Python'],
+      engines: ['Unity', 'Unreal Engine'],
+      web: ['React', 'Three.js', 'Framer Motion', 'React Router'],
+      tools: ['Ollama', 'Unity Netcode', 'Nintendo Switch API', 'Blueprints'],
+      other: ['Git', 'Visual Studio', 'VS Code']
+    }
   },
   ko: {
     photos: { profile: '프로필 사진', illustration: '프로필 일러스트' },
@@ -141,7 +149,15 @@ const COPY = {
         description: '컴퓨터공학 학사 – 실시간 인터랙티브 시뮬레이션',
         extra: '학생회장, 부회장'
       }
-    ]
+    ],
+    techStackTitle: '기술 스택',
+    techStack: {
+      languages: ['C++', 'C#', 'JavaScript', 'Python'],
+      engines: ['Unity', 'Unreal Engine'],
+      web: ['React', 'Three.js', 'Framer Motion', 'React Router'],
+      tools: ['Ollama', 'Unity Netcode', 'Nintendo Switch API', 'Blueprints'],
+      other: ['Git', 'Visual Studio', 'VS Code']
+    }
   }
 };
 
@@ -220,6 +236,44 @@ export default function About() {
               <span className="timeline-date">{item.date}</span>
               {item.description && <p>{item.description}</p>}
               {item.extra && <p>{item.extra}</p>}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <hr className="section-divider" />
+
+      <h2>{t.techStackTitle}</h2>
+      <div className="tech-stack">
+        {Object.entries(t.techStack).map(([category, items]) => (
+          <div key={category} className="tech-stack-category">
+            <h3 className="tech-stack-category-title">
+              {lang === 'ko' ? (
+                category === 'languages' ? '언어' : 
+                category === 'engines' ? '게임 엔진' :
+                category === 'web' ? '웹 기술' :
+                category === 'tools' ? '도구 & 프레임워크' : '기타'
+              ) : (
+                category === 'languages' ? 'Languages' : 
+                category === 'engines' ? 'Game Engines' :
+                category === 'web' ? 'Web Technologies' :
+                category === 'tools' ? 'Tools & Frameworks' : 'Other'
+              )}
+            </h3>
+            <div className="tech-stack-tags">
+              {items.map((tech, idx) => (
+                <motion.span
+                  key={idx}
+                  className="tech-stack-tag"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.05, duration: 0.3 }}
+                  whileHover={{ scale: 1.1, y: -2 }}
+                >
+                  {tech}
+                </motion.span>
+              ))}
             </div>
           </div>
         ))}

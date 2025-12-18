@@ -44,6 +44,7 @@ export default function Navbar({ isPlaying, toggleMusic }) {
             to="/" 
             role="menuitem"
             aria-current={location.pathname === '/' ? 'page' : undefined}
+            className={location.pathname === '/' ? 'active' : ''}
           >
             {text.home}
           </Link>
@@ -53,6 +54,7 @@ export default function Navbar({ isPlaying, toggleMusic }) {
             to="/about" 
             role="menuitem"
             aria-current={location.pathname === '/about' ? 'page' : undefined}
+            className={location.pathname === '/about' ? 'active' : ''}
           >
             {text.about}
           </Link>
@@ -62,6 +64,7 @@ export default function Navbar({ isPlaying, toggleMusic }) {
             to="/projects" 
             role="menuitem"
             aria-current={location.pathname === '/projects' || location.pathname.startsWith('/projects/') ? 'page' : undefined}
+            className={location.pathname === '/projects' || location.pathname.startsWith('/projects/') ? 'active' : ''}
           >
             {text.projects}
           </Link>
@@ -71,6 +74,7 @@ export default function Navbar({ isPlaying, toggleMusic }) {
             to="/contact" 
             role="menuitem"
             aria-current={location.pathname === '/contact' ? 'page' : undefined}
+            className={location.pathname === '/contact' ? 'active' : ''}
           >
             {text.contact}
           </Link>

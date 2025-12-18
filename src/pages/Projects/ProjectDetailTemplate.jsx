@@ -211,7 +211,56 @@ export default function ProjectDetailTemplate({
         <div className="project-meta">
           {meta.period && <span className="meta-item">{meta.period}</span>}
           {meta.teamSize && <span className="meta-item">{meta.teamSize}</span>}
-          {meta.tech && <span className="meta-item">{meta.tech}</span>}
+              {meta.tech && (
+            <span className="meta-item meta-tech-icons">
+              {meta.tech.split(' / ').map((tech, idx) => {
+                const iconMap = {
+                  'Unity': 'unity',
+                  'C#': 'csharp',
+                  'C++': 'cplusplus',
+                  'Unreal Engine': 'unrealengine',
+                  'React': 'react',
+                  'Three.js': 'threedotjs',
+                  'Framer Motion': 'framer',
+                  'React Router': 'reactrouter',
+                  'Ollama': 'ollama',
+                  'Nintendo Switch API': 'nintendo',
+                  'Visual Studio': 'visualstudio',
+                  'Visual Studio C++': 'visualstudio',
+                  'Ollama (Planned)': 'ollama'
+                };
+                const cleanTech = tech.replace(/\s*\(.*?\)\s*$/, '').trim();
+                let iconName = iconMap[cleanTech] || iconMap[tech.trim()];
+                
+                // Handle "Visual Studio C++" - use Visual Studio icon
+                if (!iconName && tech.includes('Visual Studio')) {
+                  iconName = 'visualstudio';
+                }
+                
+                if (iconName) {
+                  const iconUrl = `https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/${iconName}.svg`;
+                  return (
+                    <span key={idx} className="meta-tech-icon-wrapper" title={tech.trim()}>
+                      <img 
+                        src={iconUrl} 
+                        alt={tech.trim()}
+                        className="meta-tech-icon"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          if (e.target.nextSibling) {
+                            e.target.nextSibling.style.display = 'inline';
+                          }
+                        }}
+                      />
+                      <span className="meta-tech-fallback" style={{ display: 'none' }}>{tech.trim()}</span>
+                    </span>
+                  );
+                }
+                
+                return <span key={idx} className="meta-tech-text">{tech.trim()}</span>;
+              })}
+            </span>
+          )}
         </div>
       )}
 

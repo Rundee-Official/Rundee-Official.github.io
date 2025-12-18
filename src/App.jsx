@@ -11,10 +11,13 @@ import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-d
 import { AnimatePresence, motion } from 'framer-motion';
 
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import About from './pages/About';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
+import NotFound from './pages/NotFound';
 import HomeBackground from './components/HomeBackground';
 import { LanguageProvider } from './context/LanguageContext';
 
@@ -27,14 +30,14 @@ const RundeeItemFactory = lazy(() => import('./pages/Projects/RundeeItemFactory'
 
 // Loading fallback component for lazy-loaded routes
 const LoadingFallback = () => (
-  <div style={{ 
-    display: 'flex', 
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    minHeight: '50vh',
-    color: '#fff'
-  }}>
-    <div>Loading...</div>
+  <div className="loading-container">
+    <div className="loading-spinner">
+      <div className="spinner-ring"></div>
+      <div className="spinner-ring"></div>
+      <div className="spinner-ring"></div>
+      <div className="spinner-ring"></div>
+    </div>
+    <p className="loading-text">Loading...</p>
   </div>
 );
 
@@ -159,6 +162,7 @@ function AnimatedRoutes({ onDirectionChange }) {
             } 
           />
           <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </motion.div>
     </AnimatePresence>
@@ -219,7 +223,9 @@ export default function App() {
         <Navbar isPlaying={isPlaying} toggleMusic={toggleMusic} />
         <div className="App">
           <MainRoutesWithBackground onDirectionChange={handleDirectionChange} />
+          <Footer />
         </div>
+        <ScrollToTop />
       </Router>
     </LanguageProvider>
   );

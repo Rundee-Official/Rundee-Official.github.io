@@ -1,0 +1,97 @@
+/**
+ * File Name: NotFound.css
+ * Author: Haneul Lee (Rundee)
+ * Description: 404 Not Found page styles
+ * 
+ * Copyright (c) 2025 Haneul Lee (Rundee)
+ */
+
+.not-found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  text-align: center;
+}
+
+.not-found-content {
+  max-width: 600px;
+}
+
+.not-found-title {
+  font-size: 8rem;
+  font-weight: 900;
+  margin: 0;
+  background: linear-gradient(135deg, #1e90ff, #6c5ce7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(30, 144, 255, 0.5);
+}
+
+.not-found h2 {
+  font-size: 2rem;
+  margin: 1rem 0;
+  color: #fff;
+}
+
+.not-found p {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 2rem;
+}
+
+.not-found-button {
+  display: inline-block;
+  padding: 0.9rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, rgba(30, 144, 255, 0.2), rgba(108, 92, 231, 0.2));
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.not-found-button:hover {
+  background: linear-gradient(135deg, rgba(30, 144, 255, 0.4), rgba(108, 92, 231, 0.4));
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(30, 144, 255, 0.4);
+}
+
+.not-found-button:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .not-found-title {
+    font-size: 6rem;
+  }
+
+  .not-found h2 {
+    font-size: 1.5rem;
+  }
+
+  .not-found p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .not-found-title {
+    font-size: 4rem;
+  }
+
+  .not-found h2 {
+    font-size: 1.25rem;
+  }
+}
+

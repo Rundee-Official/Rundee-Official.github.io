@@ -1,4 +1,4 @@
-# Rundee's Portfolio 🌐
+# Rundee's Website 🌐
 
 This is my personal portfolio site built using **React** and hosted on **GitHub Pages**.
 
