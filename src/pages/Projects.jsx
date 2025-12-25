@@ -8,7 +8,7 @@
 
 import { useEffect, useMemo, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import './Projects.css';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -73,13 +73,13 @@ function ProjectCard({ project, text, isExisting = false }) {
         transition: { duration: 0.3 }
       }}
       transition={{ 
-        opacity: { duration: 0.3, delay: isExisting ? 0 : 0.5 }, // New cards appear after layout animation
+        opacity: { duration: 0.3, delay: isExisting ? 0 : 0.5 },
         scale: { duration: 0.3, delay: isExisting ? 0 : 0.5 },
         layout: { 
           type: 'spring',
-          stiffness: 300,
+          stiffness: 400,
           damping: 30,
-          mass: 0.5
+          mass: 0.8
         }
       }}
       onMouseEnter={() => setIsHovered(true)}
@@ -249,10 +249,10 @@ const copy = {
             description: 'LLM-powered item generator (Unity/UE) · presets · balance reports',
             role: 'Tools Developer\nSystems Developer',
             link: '/projects/RundeeItemFactory',
-            image: '/images/rundee-item-factory/cover.svg',
+            image: '/images/rundee-item-factory/cover.png',
             kind: 'tool',
             org: 'personal',
-            tech: ['C++', 'Unity', 'Unreal Engine', 'Ollama'],
+            tech: ['Unity', 'Unreal Engine', 'C++', 'Ollama'],
             date: '2025-11',
             order: 1
           },
@@ -356,10 +356,10 @@ const copy = {
             description: 'LLM 기반 아이템 제너레이터 (Unity/UE) · 프리셋 · 밸런스 리포트',
             role: '툴 개발자\n시스템 개발자',
             link: '/projects/RundeeItemFactory',
-            image: '/images/rundee-item-factory/cover.svg',
+            image: '/images/rundee-item-factory/cover.png',
             kind: 'tool',
             org: 'personal',
-            tech: ['C++', 'Unity', 'Unreal Engine', 'Ollama'],
+            tech: ['Unity', 'Unreal Engine', 'C++', 'Ollama'],
             date: '2025-11',
             order: 1
           },
@@ -394,26 +394,78 @@ const copy = {
 
 export default function Projects() {
   const { lang } = useLanguage();
+  const [searchParams, setSearchParams] = useSearchParams();
   const text = copy[lang] || copy.en;
   const categories = text.categories || [];
-  const [categoryId, setCategoryId] = useState(categories[0]?.id || '');
-  const [orgFilter, setOrgFilter] = useState('all');
+  
+  // Initialize state from URL params or defaults
+  const getInitialCategory = () => {
+    const category = searchParams.get('category');
+    return category && categories.find(c => c.id === category) ? category : categories[0]?.id || '';
+  };
+  
+  const getInitialFilter = () => {
+    return searchParams.get('filter') || 'all';
+  };
+  
+  const getInitialSearch = () => {
+    return searchParams.get('search') || '';
+  };
+  
+  const [categoryId, setCategoryId] = useState(getInitialCategory);
+  const [orgFilter, setOrgFilter] = useState(getInitialFilter);
   const [filterMode, setFilterMode] = useState('org'); // 'org' | 'kind'
-  const [searchQuery, setSearchQuery] = useState('');
-
+  const [searchQuery, setSearchQuery] = useState(getInitialSearch);
+  const skipUrlUpdate = useRef(false);
+  
+  // Update URL params when state changes
   useEffect(() => {
-    // Default to team category (second one after all)
-    const defaultCategory = categories.find(cat => cat.id === 'team') || categories[1] || categories[0];
-    setCategoryId(defaultCategory?.id || '');
-    setOrgFilter('all');
-    const firstCategoryId = defaultCategory?.id || '';
-    if (firstCategoryId === 'all') {
-      setFilterMode('org');
-    } else {
-      setFilterMode(firstCategoryId === 'individual' ? 'kind' : 'org');
+    if (skipUrlUpdate.current) {
+      skipUrlUpdate.current = false;
+      return;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lang]);
+    
+    const params = new URLSearchParams();
+    if (categoryId && categoryId !== categories[0]?.id) {
+      params.set('category', categoryId);
+    }
+    if (orgFilter && orgFilter !== 'all') {
+      params.set('filter', orgFilter);
+    }
+    if (searchQuery.trim()) {
+      params.set('search', searchQuery.trim());
+    }
+    
+    const newSearch = params.toString();
+    const currentSearch = searchParams.toString();
+    
+    // Only update if different to avoid unnecessary re-renders
+    if (newSearch !== currentSearch) {
+      setSearchParams(params, { replace: true });
+    }
+  }, [categoryId, orgFilter, searchQuery, searchParams, setSearchParams, categories]);
+  
+  // Handle browser back/forward navigation
+  useEffect(() => {
+    const handlePopState = () => {
+      skipUrlUpdate.current = true;
+      const urlCategory = searchParams.get('category');
+      const urlFilter = searchParams.get('filter');
+      const urlSearch = searchParams.get('search');
+      
+      if (urlCategory && categories.find(c => c.id === urlCategory)) {
+        setCategoryId(urlCategory);
+      } else {
+        setCategoryId(categories[0]?.id || '');
+      }
+      
+      setOrgFilter(urlFilter || 'all');
+      setSearchQuery(urlSearch || '');
+    };
+    
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [searchParams, categories]);
 
   const activeCategory = categories.find(c => c.id === categoryId) || categories[0] || { items: [] };
 
@@ -423,8 +475,12 @@ export default function Projects() {
     } else {
       setFilterMode(categoryId === 'individual' ? 'kind' : 'org');
     }
-    setOrgFilter('all');
-  }, [categoryId]);
+    // Reset filter to 'all' when category changes, but preserve URL param if it exists
+    const urlFilter = searchParams.get('filter');
+    if (!urlFilter || urlFilter === 'all') {
+      setOrgFilter('all');
+    }
+  }, [categoryId, searchParams]);
 
   // Get all items when 'all' category is selected
   const allItems = useMemo(() => {
@@ -519,9 +575,25 @@ export default function Projects() {
             placeholder={text.searchPlaceholder}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Escape') {
+                setSearchQuery('');
+                e.target.blur();
+              }
+            }}
             className="projects-search-input"
             aria-label={text.searchPlaceholder}
           />
+          {searchQuery && (
+            <button
+              className="projects-search-clear"
+              onClick={() => setSearchQuery('')}
+              aria-label={lang === 'ko' ? '검색어 지우기' : 'Clear search'}
+              type="button"
+            >
+              ×
+            </button>
+          )}
         </div>
       </div>
 
@@ -542,17 +614,29 @@ export default function Projects() {
         ))}
       </div>
 
-      <div className="projects-filters" aria-label="Filter">
-        {filterOptions.map((opt) => (
-          <button
-            key={opt}
-            className={orgFilter === opt ? 'active' : ''}
-            onClick={() => setOrgFilter(opt)}
+      <AnimatePresence mode="wait">
+        {categoryId !== 'all' && (
+          <motion.div
+            key={categoryId}
+            className="projects-filters"
+            aria-label="Filter"
+            initial={{ opacity: 0, height: 0, marginTop: 0, marginBottom: 0 }}
+            animate={{ opacity: 1, height: 'auto', marginTop: '1.5rem', marginBottom: '1.5rem' }}
+            exit={{ opacity: 0, height: 0, marginTop: 0, marginBottom: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
           >
-            {opt === 'all' ? text.filters.all : (text.filters[opt] || opt)}
-          </button>
-        ))}
-      </div>
+            {filterOptions.map((opt) => (
+              <button
+                key={opt}
+                className={orgFilter === opt ? 'active' : ''}
+                onClick={() => setOrgFilter(opt)}
+              >
+                {opt === 'all' ? text.filters.all : (text.filters[opt] || opt)}
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <motion.div 
         className="project-grid"
@@ -567,7 +651,7 @@ export default function Projects() {
                 key={p.title} 
                 project={p} 
                 text={text}
-                isExisting={isExisting} // No delay for existing cards
+                isExisting={isExisting}
               />
             );
           })}

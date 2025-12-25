@@ -20,7 +20,7 @@ export default function RundeeWebsite() {
       role: 'Full Stack Developer',
       period: 'May 2025 – Present',
       teamSize: 'Personal Project',
-      tech: 'React / React Router / Framer Motion / Three.js',
+      tech: 'React / Three.js / Framer Motion / React Router',
       overviewTitle: 'Overview',
       overview: [
         'Rundee Website is a modern, interactive portfolio site built with React.js, featuring a custom Three.js animated particle background system with bloom post-processing effects. The site showcases my game development projects, professional experience, and technical skills through an immersive, performant web experience.',
@@ -54,7 +54,7 @@ export default function RundeeWebsite() {
       role: '풀스택 개발자',
       period: '2025년 5월 – 현재',
       teamSize: '개인 프로젝트',
-      tech: 'React / React Router / Framer Motion / Three.js',
+      tech: 'React / Three.js / Framer Motion / React Router',
       overviewTitle: '개요',
       overview: [
         'Rundee Website는 React.js로 제작된 현대적이고 인터랙티브한 포트폴리오 사이트로, 블룸 후처리 효과가 적용된 커스텀 Three.js 파티클 배경 애니메이션 시스템을 특징으로 합니다. 이 사이트는 몰입감 있고 성능 최적화된 웹 경험을 통해 게임 개발 프로젝트, 전문 경력, 기술적 역량을 소개합니다.',

@@ -20,7 +20,7 @@ export default function BigMoth2() {
       role: 'UI/UX Programmer / Gameplay Programmer',
       period: 'Sep 2024 – Apr 2025',
       teamSize: 'Team Size: 21',
-      tech: 'Unreal Engine',
+      tech: 'Unreal Engine / C++',
       overviewTitle: 'Overview',
       overview: [
         'Big Moth 2 is a whimsical 3D bug-catching game built during a DigiPen Junior team project. As UI/UX and Gameplay Programmer, I designed and implemented all interactive UI systems and integrated them with core gameplay mechanics.',
@@ -57,7 +57,7 @@ export default function BigMoth2() {
       role: 'UI/UX & 게임플레이 프로그래머',
       period: '2024년 9월 – 2025년 4월',
       teamSize: '팀 크기: 21명',
-      tech: 'Unreal Engine',
+      tech: 'Unreal Engine / C++',
       overviewTitle: '개요',
       overview: [
         'Big Moth 2는 DigiPen 주니어 팀 프로젝트로 만든 아기자기한 3D 벌레잡기 게임입니다. UI/UX 및 게임플레이 프로그래머로서 모든 인터랙티브 UI 시스템을 설계하고 구현했으며 핵심 게임플레이 메커니즘과 통합했습니다.',

@@ -12,10 +12,10 @@ import { useLanguage } from '../../context/LanguageContext';
 const copy = {
   en: {
     title: 'FEAR',
-    role: 'Technical Director / Gameplay Programmer',
-    period: 'May 2025 – Aug 2025',
-    teamSize: 'Team Size: 8',
-    tech: 'Unity',
+      role: 'Technical Director / Gameplay Programmer',
+      period: 'May 2025 – Aug 2025',
+      teamSize: 'Team Size: 8',
+      tech: 'Unity / C#',
     demo: 'Demo',
     overviewTitle: 'Overview',
     overview: [
@@ -48,10 +48,10 @@ const copy = {
   },
   ko: {
     title: 'FEAR',
-    role: '테크니컬 디렉터 / 게임플레이 프로그래머',
-    period: '2025년 5월 – 2025년 8월',
-    teamSize: '팀 크기: 8명',
-    tech: 'Unity',
+      role: '테크니컬 디렉터 / 게임플레이 프로그래머',
+      period: '2025년 5월 – 2025년 8월',
+      teamSize: '팀 크기: 8명',
+      tech: 'Unity / C#',
     demo: '데모',
     overviewTitle: '개요',
     overview: [

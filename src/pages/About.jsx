@@ -15,7 +15,7 @@ const COPY = {
     photos: { profile: 'Profile photo', illustration: 'Profile illustration' },
     aboutTitle: 'About Me',
     intro: [
-      <>Hello! I'm <strong>Haneul Lee (a.k.a Rundee)</strong>, a passionate game developer and systems programmer based in Redmond, WA. I'm currently pursuing a Bachelor's degree in Computer Science at DigiPen Institute of Technology, specializing in Real-Time Interactive Simulation.</>,
+      <>Hello! I'm <strong>Haneul Lee (a.k.a Rundee)</strong>, a passionate game developer and systems programmer based in Redmond, WA. I'm currently pursuing a Bachelor's degree in Computer Science at DigiPen Institute of Technology, specializing in Real-Time Interactive Simulation. I was named to the Dean's Honor List for Fall 2024 and Fall 2025.</>,
       'I specialize in game systems architecture, UI/UX programming, and gameplay systems using C++ and Unreal Engine, as well as Unity Engine for rapid prototyping and cross-platform development. My work focuses on creating scalable, maintainable systems that empower designers and enable smooth collaboration across teams.',
       'With experience as a Technical Director, I\'ve architected and implemented core game systems including event-driven architectures, multiplayer networking solutions, modular quest/mission systems, and custom input abstraction layers. I have a strong interest in AI development and pathfinding, constantly exploring ways to make virtual agents behave more intelligently in tactical and simulation environments.',
       'Beyond core gameplay systems, I also develop productivity tools and pipelines to streamline development workflows. Whether it\'s LLM-powered content generation tools, automated asset pipelines, or custom editor extensions, I enjoy building solutions that solve real problems faced by development teams.',
@@ -67,7 +67,8 @@ const COPY = {
       {
         school: 'DigiPen Institute of Technology',
         date: 'Sep 2019 – Apr 2026',
-        description: 'Bachelor of Science in Computer Science – Real-Time Interactive Simulation'
+        description: 'Bachelor of Science in Computer Science – Real-Time Interactive Simulation',
+        extra: 'Dean\'s Honor List – Fall 2024, Fall 2025'
       },
       {
         school: 'Keimyung University',
@@ -89,7 +90,7 @@ const COPY = {
     photos: { profile: '프로필 사진', illustration: '프로필 일러스트' },
     aboutTitle: '소개',
     intro: [
-      <>안녕하세요! 저는 <strong>이하늘 (Rundee)</strong>입니다. 워싱턴주 레드먼드에서 활동하는 게임 개발자이자 시스템 프로그래머이며, 현재 DigiPen Institute of Technology에서 컴퓨터공학 학사 과정을 밟고 있습니다 (전공: 실시간 인터랙티브 시뮬레이션).</>,
+      <>안녕하세요! 저는 <strong>이하늘 (Rundee)</strong>입니다. 워싱턴주 레드먼드에서 활동하는 게임 개발자이자 시스템 프로그래머이며, 현재 DigiPen Institute of Technology에서 컴퓨터공학 학사 과정을 밟고 있습니다 (전공: 실시간 인터랙티브 시뮬레이션). 2024년 가을학기와 2025년 가을학기 학장 명예의 목록에 선정되었습니다.</>,
       'C++ 및 언리얼 엔진을 활용한 게임 시스템 아키텍처, UI/UX 프로그래밍, 게임플레이 시스템 개발을 전문으로 하며, 빠른 프로토타이핑과 크로스 플랫폼 개발을 위해 Unity 엔진도 활용합니다. 디자이너를 지원하고 팀 간 원활한 협업을 가능하게 하는 확장 가능하고 유지보수하기 쉬운 시스템을 구축하는 데 중점을 둡니다.',
       '테크니컬 디렉터 경험을 통해 이벤트 기반 아키텍처, 멀티플레이어 네트워킹 솔루션, 모듈형 퀘스트/미션 시스템, 커스텀 입력 추상화 레이어 등 핵심 게임 시스템을 설계하고 구현해왔습니다. AI 개발과 경로 탐색에도 관심이 많아, 전술 및 시뮬레이션 환경에서 가상 에이전트가 더 지능적으로 행동하도록 연구하고 있습니다.',
       '핵심 게임플레이 시스템 외에도 개발 워크플로우를 간소화하는 생산성 도구와 파이프라인을 개발합니다. LLM 기반 콘텐츠 생성 도구, 자동화된 에셋 파이프라인, 커스텀 에디터 확장 등 개발팀이 직면한 실제 문제를 해결하는 솔루션을 만드는 것을 즐깁니다.',
@@ -141,7 +142,8 @@ const COPY = {
       {
         school: '디지펜 공과대학교',
         date: '2019년 9월 – 2026년 4월',
-        description: '컴퓨터공학 학사 – 실시간 인터랙티브 시뮬레이션'
+        description: '컴퓨터공학 학사 – 실시간 인터랙티브 시뮬레이션',
+        extra: '학장 명예의 목록 – 2024년 가을학기, 2025년 가을학기'
       },
       {
         school: '계명대학교',
