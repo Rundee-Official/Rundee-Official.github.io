@@ -12,6 +12,7 @@ export const PROJECT_LIST = [
   { id: 'BigMoth2', path: '/projects/BigMoth2', title: 'Big Moth 2' },
   { id: 'SpellItOut', path: '/projects/SpellItOut', title: 'Spell It Out' },
   { id: 'RundeeItemFactory', path: '/projects/RundeeItemFactory', title: 'Rundee Item Factory' },
+  { id: 'DiscordBot', path: '/projects/DiscordBot', title: 'Rundee Discord Bot' },
   { id: 'RundeeWebsite', path: '/projects/RundeeWebsite', title: 'Rundee Website' }
 ];
 

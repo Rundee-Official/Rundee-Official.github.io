@@ -257,6 +257,18 @@ const copy = {
             order: 1
           },
           {
+            title: 'Rundee Discord Bot',
+            description: 'Discord bot for meeting reminders and GitHub activity notifications.',
+            role: 'Full Stack Developer',
+            link: '/projects/DiscordBot',
+            image: '/images/rundee-discord-bot/cover.png',
+            kind: 'web',
+            org: 'personal',
+            tech: ['Node.js', 'Express', 'Discord API'],
+            date: '2025-12',
+            order: 2
+          },
+          {
             title: 'Rundee Website',
             description: 'React + Three.js portfolio with animated background and routing.',
             role: 'Full Stack Developer',
@@ -266,7 +278,7 @@ const copy = {
             org: 'personal',
             tech: ['React', 'Three.js', 'Framer Motion', 'React Router'],
             date: '2025-05',
-            order: 2
+            order: 3
           }
         ]
       }
@@ -364,6 +376,18 @@ const copy = {
             order: 1
           },
           {
+            title: 'Rundee Discord Bot',
+            description: '회의 알림 및 GitHub 활동 알림을 제공하는 Discord 봇.',
+            role: '풀스택 개발자',
+            link: '/projects/DiscordBot',
+            image: '/images/rundee-discord-bot/cover.png',
+            kind: 'web',
+            org: 'personal',
+            tech: ['Node.js', 'Express', 'Discord API'],
+            date: '2025-12',
+            order: 2
+          },
+          {
             title: 'Rundee Website',
             description: 'React + Three.js 포트폴리오, 애니메이티드 배경과 라우팅.',
             role: '풀스택 개발자',
@@ -373,7 +397,7 @@ const copy = {
             org: 'personal',
             tech: ['React', 'Three.js', 'Framer Motion', 'React Router'],
             date: '2025-05',
-            order: 2
+            order: 3
           }
         ]
       }

@@ -27,6 +27,7 @@ const Fear = lazy(() => import('./pages/Projects/Fear'));
 const SpellItOut = lazy(() => import('./pages/Projects/SpellItOut'));
 const RundeeWebsite = lazy(() => import('./pages/Projects/RundeeWebsite'));
 const RundeeItemFactory = lazy(() => import('./pages/Projects/RundeeItemFactory'));
+const DiscordBot = lazy(() => import('./pages/Projects/DiscordBot'));
 
 // Loading fallback component for lazy-loaded routes
 const LoadingFallback = () => (
@@ -158,6 +159,14 @@ function AnimatedRoutes({ onDirectionChange }) {
             element={
               <Suspense fallback={<LoadingFallback />}>
                 <RundeeWebsite />
+              </Suspense>
+            } 
+          />
+          <Route 
+            path="/projects/DiscordBot" 
+            element={
+              <Suspense fallback={<LoadingFallback />}>
+                <DiscordBot />
               </Suspense>
             } 
           />

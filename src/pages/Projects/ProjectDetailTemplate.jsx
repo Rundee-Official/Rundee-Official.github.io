@@ -61,7 +61,8 @@ export default function ProjectDetailTemplate({
 
       const updateLoopWidth = () => {
         if (ref.current) {
-          const newWidth = ref.current.scrollWidth / 2;
+          // Calculate loop width based on one set of images (we duplicate 4 times)
+          const newWidth = ref.current.scrollWidth / 4;
           if (newWidth > 0) {
             loopWidth = newWidth;
             loopWidthDirty = false;
@@ -139,13 +140,22 @@ export default function ProjectDetailTemplate({
   const renderGallery = (gallery, ref, key) => {
     if (!gallery || !gallery.images || gallery.images.length === 0) return null;
     
+    // Duplicate images multiple times to ensure seamless infinite scroll
+    // Use at least 4 copies to handle cases with few images
+    const duplicatedImages = [
+      ...gallery.images,
+      ...gallery.images,
+      ...gallery.images,
+      ...gallery.images
+    ];
+    
     return (
       <>
         <hr className="section-divider" />
         <h2>{gallery.title}</h2>
         <div className="carousel-wrapper">
           <div className="carousel-track" ref={ref} style={{ minHeight: '180px' }}>
-            {[...gallery.images, ...gallery.images].map((src, i) => (
+            {duplicatedImages.map((src, i) => (
               <img
                 key={`${key}-${i}-${src}`}
                 src={src}
@@ -227,7 +237,10 @@ export default function ProjectDetailTemplate({
                   'Nintendo Switch API': 'nintendo',
                   'Visual Studio': 'visualstudio',
                   'Visual Studio C++': 'visualstudio',
-                  'Ollama (Planned)': 'ollama'
+                  'Ollama (Planned)': 'ollama',
+                  'Discord API': 'discord',
+                  'Node.js': 'nodedotjs',
+                  'Express': 'express'
                 };
                 const cleanTech = tech.replace(/\s*\(.*?\)\s*$/, '').trim();
                 let iconName = iconMap[cleanTech] || iconMap[tech.trim()];
